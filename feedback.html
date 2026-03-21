@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PCLabs — Send Feedback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script defer data-domain="thepclabs.com" src="https://plausible.io/js/script.js"></script>
+<style>
+  :root{
+    --bg:#080b10;--surface:#0e1219;--card:#121720;--border:#1c2333;--border2:#263044;
+    --green:#00d97e;--green-lo:rgba(0,217,126,0.10);--green-md:rgba(0,217,126,0.22);
+    --text:#e8edf5;--muted:#7b8ea8;--faint:#313d52;
+    --mono:'JetBrains Mono',monospace;--ui:'Outfit',sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--ui);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,217,126,0.07) 1px,transparent 1px);background-size:36px 36px;pointer-events:none;z-index:0}
+  .glow-orb{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:340px;background:radial-gradient(ellipse,rgba(0,217,126,0.06) 0%,transparent 68%);pointer-events:none;z-index:0}
+  nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(8,11,16,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+  .logo{font-size:1.15rem;font-weight:800;letter-spacing:-0.02em;color:var(--text);text-decoration:none}
+  .logo b{color:var(--green)}
+  .nav-links{display:flex;gap:1.8rem}
+  .nav-links a{font-size:0.85rem;color:var(--muted);text-decoration:none;font-weight:500;transition:color .15s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-pill{font-family:var(--mono);font-size:0.65rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);border:1px solid var(--green-md);background:var(--green-lo);border-radius:100px;padding:0.22rem 0.75rem;display:flex;align-items:center;gap:0.45rem}
+  .pill-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:pulse 2.2s ease infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  main{flex:1;position:relative;z-index:1;max-width:1060px;margin:0 auto;width:100%;padding:6rem 2.5rem 5rem;display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start}
+  @media(max-width:780px){main{grid-template-columns:1fr;gap:3rem;padding:4rem 1.5rem 4rem}}
+  .page-tag{font-family:var(--mono);font-size:0.65rem;color:var(--green);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;gap:0.5rem}
+  .page-tag::before{content:'//';opacity:0.5}
+  h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1rem}
+  h1 span{color:var(--green)}
+  .page-sub{font-size:0.95rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;max-width:380px}
+  .feedback-types{display:flex;flex-direction:column;gap:0.65rem}
+  .fb-type{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:0.9rem 1.1rem;display:flex;align-items:flex-start;gap:0.75rem;transition:border-color .2s}
+  .fb-type:hover{border-color:var(--border2)}
+  .fb-type-icon{font-size:1rem;flex-shrink:0;margin-top:0.05rem}
+  .fb-type strong{display:block;font-size:0.84rem;font-weight:700;color:var(--text);margin-bottom:0.1rem}
+  .fb-type span{font-size:0.76rem;color:var(--muted)}
+  .form-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;overflow:hidden;position:relative}
+  .form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--green) 50%,transparent 95%)}
+  .form-body{padding:2rem}
+  .form-group{margin-bottom:1.25rem}
+  .form-label{display:block;font-family:var(--mono);font-size:0.62rem;color:var(--faint);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+  .form-input,.form-textarea{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:0.7rem 1rem;font-family:var(--ui);font-size:0.875rem;color:var(--text);outline:none;transition:border-color .15s}
+  .form-input::placeholder,.form-textarea::placeholder{color:var(--faint)}
+  .form-input:focus,.form-textarea:focus{border-color:var(--green-md)}
+  .form-textarea{resize:vertical;min-height:130px;line-height:1.6}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:500px){.form-row{grid-template-columns:1fr}}
+  .form-btn{width:100%;background:var(--green);color:#050810;font-family:var(--ui);font-size:0.95rem;font-weight:700;padding:0.8rem;border-radius:8px;border:none;cursor:pointer;transition:all .15s;margin-top:0.25rem}
+  .form-btn:hover{background:#00c070;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,217,126,0.22)}
+  .form-alt{font-family:var(--mono);font-size:0.62rem;color:var(--faint);text-align:center;margin-top:0.85rem;letter-spacing:0.03em}
+  .form-alt a{color:var(--green);text-decoration:none}
+  .form-alt a:hover{text-decoration:underline}
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.75rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+  .footer-logo{font-weight:700;font-size:0.9rem;color:var(--muted)}
+  .footer-logo b{color:var(--green)}
+  .footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+  .footer-links a{font-family:var(--mono);font-size:0.68rem;color:var(--faint);text-decoration:none;letter-spacing:0.04em;transition:color .15s}
+  .footer-links a:hover{color:var(--muted)}
+  .footer-copy{font-family:var(--mono);font-size:0.65rem;color:var(--faint)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @media(max-width:600px){nav{padding:0 1.25rem}.nav-links{display:none}footer{padding:1.5rem;flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo"><b>PC</b>Labs</a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="download.html">Download</a>
+    <a href="app-preview.html">App Preview</a>
+  </div>
+  <div class="nav-pill"><div class="pill-dot"></div>Beta</div>
+</nav>
+<main>
+  <div class="glow-orb"></div>
+  <div>
+    <div class="page-tag">Beta Feedback</div>
+    <h1>Help us<br><span>build better.</span></h1>
+    <p class="page-sub">PCLabs is an early beta. Every bug report, suggestion, and "this didn't work" message makes the product better. There are no wrong answers — we read everything.</p>
+    <div class="feedback-types">
+      <div class="fb-type">
+        <span class="fb-type-icon">🐛</span>
+        <div><strong>Bug or error</strong><span>Something crashed, didn't load, or returned a wrong result.</span></div>
+      </div>
+      <div class="fb-type">
+        <span class="fb-type-icon">💡</span>
+        <div><strong>Feature suggestion</strong><span>A game, check, or feature you'd like to see added.</span></div>
+      </div>
+      <div class="fb-type">
+        <span class="fb-type-icon">📊</span>
+        <div><strong>Scan result feedback</strong><span>A result that seemed wrong, confusing, or unhelpful.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="form-card">
+    <div class="form-body">
+      <form action="https://formspree.io/f/REPLACE_ME" method="POST">
+        <input type="hidden" name="subject" value="PCLabs Beta Feedback"/>
+        <input type="hidden" name="source" value="Feedback Page"/>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="fb-name">Name</label>
+            <input class="form-input" id="fb-name" type="text" name="name" placeholder="Your name" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fb-email">Email</label>
+            <input class="form-input" id="fb-email" type="email" name="email" placeholder="your@email.com" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fb-what">What happened?</label>
+          <textarea class="form-textarea" id="fb-what" name="feedback" placeholder="Describe what you saw, what you expected, or what you'd like to see..." required></textarea>
+        </div>
+        <button class="form-btn" type="submit">Send Feedback →</button>
+        <p class="form-alt">Or email us directly at <a href="mailto:hello@thepclabs.com">hello@thepclabs.com</a></p>
+      </form>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-logo"><b>PC</b>Labs</div>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="download.html">Download</a>
+    <a href="app-preview.html">App Preview</a>
+    <a href="mailto:hello@thepclabs.com">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 PCLabs</div>
+</footer>
+</body>
+</html>
