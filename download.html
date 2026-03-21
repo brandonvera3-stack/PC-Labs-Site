@@ -34,7 +34,16 @@
   .download-btn:hover{background:#00c070;transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,217,126,0.25)}
   .download-btn svg{width:18px;height:18px;flex-shrink:0}
   .disclaimer{font-family:var(--mono);font-size:0.67rem;color:var(--faint);letter-spacing:0.05em;margin-top:1.1rem;animation:fadeUp 0.5s 0.28s ease both}
-  .req-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;overflow:hidden;max-width:540px;margin:3.5rem auto 0;text-align:left}
+  .coming-soon{font-family:var(--mono);font-size:0.65rem;color:var(--faint);letter-spacing:0.04em;margin-top:0.55rem}
+  .after-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;overflow:hidden;max-width:540px;margin:3rem auto 0;text-align:left}
+  .after-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0.9rem 1.5rem}
+  .after-header-title{font-family:var(--mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase}
+  .after-steps{padding:1.4rem 1.5rem;display:flex;flex-direction:column;gap:0.85rem}
+  .after-step{display:flex;align-items:flex-start;gap:0.9rem}
+  .after-num{font-family:var(--mono);font-size:0.62rem;font-weight:500;color:var(--green);background:var(--green-lo);border:1px solid var(--green-md);border-radius:4px;padding:0.2rem 0.45rem;flex-shrink:0;margin-top:0.1rem;letter-spacing:0.06em}
+  .after-text strong{display:block;font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:0.1rem}
+  .after-text span{font-size:0.77rem;color:var(--muted)}
+  .req-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;overflow:hidden;max-width:540px;margin:1.5rem auto 0;text-align:left}
   .req-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0.9rem 1.5rem;display:flex;align-items:center;gap:0.5rem}
   .req-header-title{font-family:var(--mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase}
   .req-body{padding:1.4rem 1.5rem;display:flex;flex-direction:column;gap:0.65rem}
@@ -59,6 +68,7 @@
 </style>
 </head>
 <body>
+
 <nav>
   <a href="/" class="logo"><b>PC</b>Labs</a>
   <div class="nav-links">
@@ -69,18 +79,49 @@
   </div>
   <div class="nav-pill"><div class="pill-dot"></div>Public Beta</div>
 </nav>
+
 <main>
   <div class="glow-orb"></div>
   <div class="page-tag">Public Beta</div>
   <h1>Download the<br><span>PCLabs Beta</span></h1>
   <p class="page-sub">Run a one-click scan to diagnose performance issues and get plain-English results. Free to download — no account required.</p>
-  <a href="mailto:hello@thepclabs.com" class="download-btn">
+
+  <a href="/PCLabs-Setup.exe" class="download-btn">
     <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     Download PCLabs Beta
   </a>
   <p class="disclaimer">Early beta · Windows 10/11 only · Read-only diagnostics · Free</p>
+  <p class="coming-soon">Installer coming soon if the file is not yet available.</p>
+
+  <div class="after-card">
+    <div class="after-header"><div class="after-header-title">What happens after download</div></div>
+    <div class="after-steps">
+      <div class="after-step">
+        <span class="after-num">01</span>
+        <div class="after-text">
+          <strong>Open the installer</strong>
+          <span>Run PCLabs-Setup.exe and follow the short setup. No bloatware, no extra software bundled.</span>
+        </div>
+      </div>
+      <div class="after-step">
+        <span class="after-num">02</span>
+        <div class="after-text">
+          <strong>Run your first full scan</strong>
+          <span>Launch PCLabs and press the single scan button. Results are ready in under 90 seconds.</span>
+        </div>
+      </div>
+      <div class="after-step">
+        <span class="after-num">03</span>
+        <div class="after-text">
+          <strong>Review findings and recommendations</strong>
+          <span>See detected issues, confidence levels, and plain-English actions — no tech knowledge needed.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="req-card">
     <div class="req-header"><div class="req-header-title">System Requirements</div></div>
     <div class="req-body">
@@ -90,15 +131,19 @@
       <div class="req-row"><div class="req-check">✓</div><div class="req-text"><strong>No account required</strong><span>Download and run without signing up. No data sent without your consent.</span></div></div>
     </div>
   </div>
+
   <div class="beta-note">
     <span class="beta-note-icon">⚠️</span>
     <p>This is an early public beta. PCLabs is read-only — it does not modify your system. If you run into anything unexpected, <a href="/feedback.html">send feedback</a> or email <a href="mailto:hello@thepclabs.com">hello@thepclabs.com</a>.</p>
   </div>
+
   <div style="margin-top:1.5rem;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
     <a href="/feedback.html" style="font-family:var(--mono);font-size:0.72rem;color:var(--green);text-decoration:none;letter-spacing:0.04em;">Report a problem or send feedback →</a>
     <a href="/" style="font-family:var(--mono);font-size:0.72rem;color:var(--faint);text-decoration:none;letter-spacing:0.04em;">← Back to Home</a>
   </div>
+
 </main>
+
 <footer>
   <div class="footer-logo"><b>PC</b>Labs</div>
   <div class="footer-links">
@@ -109,5 +154,6 @@
   </div>
   <div class="footer-copy">© 2026 PCLabs</div>
 </footer>
+
 </body>
 </html>
