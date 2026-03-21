@@ -1,350 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PCLabs — PC Diagnostics & Gaming Optimization</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+  /* ── TOKENS ── */
   :root {
-    --bg:        #0a0a0f;
-    --surface:   #111118;
-    --card:      #16161f;
-    --border:    #22222e;
-    --blue:      #4f8ef7;
-    --blue-glow: rgba(79,142,247,0.15);
-    --text:      #f0f0f5;
-    --muted:     #8888a0;
-    --faint:     #3a3a50;
+    --bg:       #080b10;
+    --surface:  #0e1219;
+    --card:     #121720;
+    --border:   #1c2333;
+    --border2:  #263044;
+    --green:    #00d97e;
+    --green-lo: rgba(0,217,126,0.10);
+    --green-md: rgba(0,217,126,0.22);
+    --text:     #e8edf5;
+    --muted:    #7b8ea8;
+    --faint:    #313d52;
+    --mono:     'JetBrains Mono', monospace;
+    --ui:       'Outfit', sans-serif;
   }
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-family: var(--ui);
+    font-size: 16px;
     line-height: 1.6;
-    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
 
-  /* subtle grid texture */
+  /* dot grid */
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--faint) 1px, transparent 1px),
-      linear-gradient(90deg, var(--faint) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.18;
-    pointer-events: none;
-    z-index: 0;
+    position: fixed; inset: 0;
+    background-image: radial-gradient(circle, rgba(0,217,126,0.07) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none; z-index: 0;
   }
 
-  /* NAV */
+  /* hero glow */
+  .glow-orb {
+    position: absolute;
+    top: -120px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 420px;
+    background: radial-gradient(ellipse, rgba(0,217,126,0.07) 0%, transparent 68%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── NAV ── */
   nav {
     position: sticky; top: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2.5rem;
-    height: 58px;
-    background: rgba(10,10,15,0.85);
+    padding: 0 2.5rem; height: 62px;
+    background: rgba(8,11,16,0.88);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
-
   .logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text);
+    font-size: 1.15rem; font-weight: 800;
+    letter-spacing: -0.02em; color: var(--text);
   }
-  .logo span { color: var(--blue); }
-
+  .logo b { color: var(--green); font-weight: 800; }
   .nav-pill {
-    background: var(--blue-glow);
-    border: 1px solid rgba(79,142,247,0.3);
-    color: var(--blue);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font-family: var(--mono); font-size: 0.65rem;
+    font-weight: 500; letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 0.3rem 0.9rem;
-    border-radius: 100px;
+    color: var(--green);
+    border: 1px solid var(--green-md);
+    background: var(--green-lo);
+    border-radius: 100px; padding: 0.22rem 0.75rem;
+    display: flex; align-items: center; gap: 0.45rem;
+  }
+  .pill-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 5px var(--green);
+    animation: pulse 2.2s ease infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.4; }
   }
 
-  /* HERO */
+  /* ── HERO ── */
   .hero {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative; z-index: 1;
+    max-width: 860px; margin: 0 auto;
+    padding: 8rem 2.5rem 6.5rem;
     text-align: center;
-    padding: 8rem 2rem 6rem;
   }
-
-  /* blue radial glow behind hero */
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 700px;
-    height: 500px;
-    background: radial-gradient(ellipse at center top, rgba(79,142,247,0.12) 0%, transparent 65%);
-    pointer-events: none;
+  .hero-label {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--mono); font-size: 0.68rem;
+    color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    animation: fadeUp 0.5s ease both;
   }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 0.3rem 0.9rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-  .hero-badge-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--blue);
-    box-shadow: 0 0 6px var(--blue);
-  }
+  .hero-label-line { width: 20px; height: 1px; background: var(--faint); }
 
   h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.4rem, 6vw, 4rem);
-    font-weight: 700;
-    line-height: 1.1;
+    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.08;
     letter-spacing: -0.03em;
-    max-width: 680px;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.4rem;
+    animation: fadeUp 0.5s 0.08s ease both;
   }
-  h1 em {
-    font-style: normal;
-    color: var(--blue);
+  h1 span { color: var(--green); }
+
+  .sub {
+    font-size: 1.05rem; color: var(--muted);
+    max-width: 500px; margin: 0 auto 2.6rem;
+    line-height: 1.75;
+    animation: fadeUp 0.5s 0.16s ease both;
   }
 
-  .subheadline {
-    font-size: 1.05rem;
-    color: var(--muted);
-    max-width: 500px;
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
+  .cta-row {
+    display: flex; align-items: center;
+    justify-content: center; gap: 0.9rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.5s 0.24s ease both;
   }
+  .btn-dl {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    background: var(--green); color: #050810;
+    font-family: var(--ui); font-size: 0.95rem; font-weight: 700;
+    padding: 0.78rem 1.9rem; border-radius: 8px;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: all 0.15s;
+    box-shadow: 0 0 0 0 rgba(0,217,126,0);
+  }
+  .btn-dl:hover {
+    background: #00c070;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,217,126,0.22);
+  }
+  .btn-dl svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .btn-link {
+    font-size: 0.875rem; color: var(--muted);
+    text-decoration: none; font-weight: 500;
+    transition: color 0.15s;
+  }
+  .btn-link:hover { color: var(--text); }
 
-  .cta-wrap {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+  .hero-meta {
+    margin-top: 2rem;
+    font-family: var(--mono); font-size: 0.65rem;
+    color: var(--faint); letter-spacing: 0.06em;
+    animation: fadeUp 0.5s 0.32s ease both;
+    display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
   }
+  .hero-meta span::before { content: '· '; }
+  .hero-meta span:first-child::before { content: ''; }
 
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--blue);
-    color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 0.75rem 1.75rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 0 0 0 rgba(79,142,247,0);
-    text-decoration: none;
-  }
-  .btn-primary:hover {
-    opacity: 0.88;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 28px rgba(79,142,247,0.3);
-  }
-  .btn-arrow { font-size: 1rem; }
+  /* ── DIVIDER ── */
+  .rule { border: none; border-top: 1px solid var(--border); }
 
-  .cta-note {
-    font-size: 0.75rem;
-    color: var(--faint);
-  }
-
-  /* FEATURES */
+  /* ── FEATURES ── */
   .features {
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
+    max-width: 1060px; margin: 0 auto;
+    padding: 5.5rem 2.5rem 6rem;
+  }
+  .feat-label {
+    font-family: var(--mono); font-size: 0.65rem;
+    color: var(--green); letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 0.7rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .feat-label::before { content: '//'; opacity: 0.5; }
+  .feat-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  .cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 2rem 8rem;
-    border-top: 1px solid var(--border);
-  }
-
-  /* divider lines between cards */
-  .features::before {
-    content: '';
-    position: absolute;
-    top: 0; left: calc(2rem + 33.33%);
-    width: 1px; height: 100%;
     background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
   }
-  .features::after {
-    content: '';
-    position: absolute;
-    top: 0; left: calc(2rem + 66.66%);
-    width: 1px; height: 100%;
-    background: var(--border);
-  }
-
-  @media (max-width: 680px) {
-    .features {
-      grid-template-columns: 1fr;
-    }
-    .features::before, .features::after { display: none; }
+  @media (max-width: 700px) {
+    .cards { grid-template-columns: 1fr; }
   }
 
   .card {
-    padding: 2.5rem 2rem;
+    background: var(--card);
+    padding: 2.2rem 2rem;
+    position: relative;
     transition: background 0.2s;
   }
-  .card:hover { background: rgba(79,142,247,0.04); }
+  .card:hover { background: var(--surface); }
+  .card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--green) 50%, transparent 90%);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .card:hover::after { opacity: 1; }
 
+  .card-index {
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--faint); letter-spacing: 0.1em;
+    margin-bottom: 1.1rem;
+  }
   .card-icon {
-    width: 42px; height: 42px;
-    background: var(--card);
-    border: 1px solid var(--border);
+    width: 44px; height: 44px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.15rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.1rem;
   }
-
   .card h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1rem; font-weight: 700;
     letter-spacing: -0.01em;
-    margin-bottom: 0.5rem;
-    color: var(--text);
+    margin-bottom: 0.55rem;
   }
-
   .card p {
-    font-size: 0.875rem;
-    color: var(--muted);
+    font-size: 0.875rem; color: var(--muted);
     line-height: 1.75;
   }
 
-  .card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--blue);
-    margin-top: 1rem;
-    text-decoration: none;
-    opacity: 0.8;
-    transition: opacity 0.15s;
-  }
-  .card-link:hover { opacity: 1; }
-
-  /* FOOTER */
+  /* ── FOOTER ── */
   footer {
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     border-top: 1px solid var(--border);
     padding: 1.75rem 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-weight: 700; font-size: 0.9rem; color: var(--muted); }
+  .footer-logo b { color: var(--green); }
+  .footer-copy {
+    font-family: var(--mono); font-size: 0.65rem;
+    color: var(--faint); letter-spacing: 0.04em;
   }
 
-  .footer-logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--muted);
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
   }
-  .footer-logo span { color: var(--blue); }
-
-  .footer-note {
-    font-size: 0.75rem;
-    color: var(--faint);
+  @media (max-width: 600px) {
+    nav { padding: 0 1.25rem; }
+    .hero { padding: 5.5rem 1.5rem 5rem; }
+    .features { padding: 4rem 1.5rem 5rem; }
+    footer { padding: 1.5rem; }
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">PC<span>Labs</span></div>
-  <div class="nav-pill">Beta</div>
+  <div class="logo"><b>PC</b>Labs</div>
+  <div class="nav-pill"><div class="pill-dot"></div>Beta</div>
 </nav>
 
 <section class="hero">
-  <div class="hero-badge">
-    <div class="hero-badge-dot"></div>
+  <div class="glow-orb"></div>
+
+  <div class="hero-label">
+    <div class="hero-label-line"></div>
     PC Diagnostics & Gaming Optimization
+    <div class="hero-label-line"></div>
   </div>
 
-  <h1>Know exactly what's <em>slowing your PC</em> down.</h1>
+  <h1>Press one button.<br><span>Understand your PC.</span></h1>
 
-  <p class="subheadline">
-    PCLabs diagnoses performance issues and optimizes your games — with honest results in plain English. No bloatware, no fake fixes.
+  <p class="sub">
+    PCLabs runs a full health scan and gaming performance check in under 90 seconds — then tells you exactly what's wrong and what to do, in plain English.
   </p>
 
-  <div class="cta-wrap">
-    <a href="#" class="btn-primary">
-      Download Beta <span class="btn-arrow">↓</span>
+  <div class="cta-row">
+    <a href="#" class="btn-dl">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Download Beta
     </a>
+    <a href="#features" class="btn-link">See what it does →</a>
   </div>
-  <p class="cta-note" style="margin-top:0.9rem;">Windows 10/11 · Free to try · No account needed</p>
+
+  <div class="hero-meta">
+    <span>Windows 10 / 11</span>
+    <span>Free to try</span>
+    <span>No account needed</span>
+    <span>No bloatware</span>
+  </div>
 </section>
 
-<div class="features">
+<hr class="rule"/>
 
-  <div class="card">
-    <div class="card-icon">🩺</div>
-    <h3>One-Click Diagnostics</h3>
-    <p>Scans for overheating, driver conflicts, RAM issues, and failing drives. Results in under 90 seconds, explained without jargon.</p>
-    <a href="#" class="card-link">Learn more →</a>
+<section class="features" id="features">
+  <div class="feat-label">Features</div>
+  <div class="feat-title">Everything your PC has been hiding from you.</div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-index">01 / 03</div>
+      <div class="card-icon">🩺</div>
+      <h3>One-Click Diagnostics</h3>
+      <p>Scans for overheating, driver conflicts, RAM misconfiguration, and failing drives. Results with confidence levels in plain English.</p>
+    </div>
+    <div class="card">
+      <div class="card-index">02 / 03</div>
+      <div class="card-icon">🎮</div>
+      <h3>Gaming Optimization</h3>
+      <p>Detects your installed games and recommends specific settings tuned to your hardware — not generic presets copied from a wiki.</p>
+    </div>
+    <div class="card">
+      <div class="card-index">03 / 03</div>
+      <div class="card-icon">📊</div>
+      <h3>Benchmark & Bottleneck</h3>
+      <p>Estimates real FPS ranges per game and identifies whether your CPU, GPU, or RAM is the limiting factor holding you back.</p>
+    </div>
   </div>
-
-  <div class="card">
-    <div class="card-icon">🎮</div>
-    <h3>Gaming Optimization</h3>
-    <p>Detects your installed games and recommends specific in-game settings tuned to your actual hardware — not generic presets.</p>
-    <a href="#" class="card-link">See supported games →</a>
-  </div>
-
-  <div class="card">
-    <div class="card-icon">📊</div>
-    <h3>Benchmark & Bottleneck</h3>
-    <p>Run a lightweight benchmark to see real FPS estimates per game, and find out which component is holding your system back.</p>
-    <a href="#" class="card-link">View demo results →</a>
-  </div>
-
-</div>
+</section>
 
 <footer>
-  <div class="footer-logo">PC<span>Labs</span></div>
-  <div class="footer-note">No bloatware · No fake fixes · No upsell pressure · © 2025 PCLabs</div>
+  <div class="footer-logo"><b>PC</b>Labs</div>
+  <div class="footer-copy">No bloatware &nbsp;·&nbsp; No fake fixes &nbsp;·&nbsp; © 2025 PCLabs</div>
 </footer>
 
 </body>
