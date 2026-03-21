@@ -166,115 +166,6 @@
   /* ── DIVIDER ── */
   .rule { border: none; border-top: 1px solid var(--border); }
 
-  /* ── HOW IT WORKS ── */
-  .how {
-    position: relative; z-index: 1;
-    max-width: 1060px; margin: 0 auto;
-    padding: 5.5rem 2.5rem 6rem;
-  }
-  .how-tag {
-    font-family: var(--mono); font-size: 0.65rem;
-    color: var(--green); letter-spacing: 0.14em; text-transform: uppercase;
-    margin-bottom: 0.7rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .how-tag::before { content: '//'; opacity: 0.5; }
-  .how-title {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 700; letter-spacing: -0.02em;
-    margin-bottom: 3rem;
-  }
-
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    position: relative;
-  }
-  @media (max-width: 700px) {
-    .steps { grid-template-columns: 1fr; gap: 0; }
-  }
-
-  .step {
-    padding: 0 2.5rem 0 0;
-    position: relative;
-  }
-  .step:last-child { padding-right: 0; }
-  @media (max-width: 700px) {
-    .step { padding: 0 0 2.5rem 3.5rem; }
-    .step:last-child { padding-bottom: 0; }
-  }
-
-  .step-num {
-    font-family: var(--mono); font-size: 0.62rem;
-    font-weight: 500; letter-spacing: 0.12em;
-    color: var(--green); margin-bottom: 1rem;
-  }
-
-  /* horizontal connector line (desktop) */
-  .step-connector {
-    display: none;
-  }
-  @media (min-width: 701px) {
-    .step { padding: 0 2rem; }
-    .step:first-child { padding-left: 0; }
-    .step:last-child { padding-right: 0; }
-    .step-connector {
-      display: block;
-      position: absolute;
-      top: 54px;
-      right: -1px;
-      width: 2rem;
-      height: 1px;
-      background: linear-gradient(90deg, var(--border2), transparent);
-    }
-  }
-
-  /* vertical connector line (mobile) */
-  @media (max-width: 700px) {
-    .step { position: relative; }
-    .step-num {
-      position: absolute;
-      left: 0; top: 0;
-    }
-    .step-connector {
-      display: block;
-      position: absolute;
-      left: 18px;
-      top: 58px;
-      bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, var(--border2), transparent);
-    }
-  }
-
-  .step-icon {
-    width: 46px; height: 46px;
-    background: var(--card);
-    border: 1px solid var(--border2);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-    margin-bottom: 1.1rem;
-    position: relative; z-index: 1;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .step:hover .step-icon {
-    border-color: var(--green-md);
-    background: var(--surface);
-  }
-
-  .step h3 {
-    font-size: 0.95rem; font-weight: 700;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.55rem;
-    line-height: 1.35;
-  }
-  .step p {
-    font-size: 0.85rem; color: var(--muted);
-    line-height: 1.75;
-  }
-
   /* ── FEATURES ── */
   .features {
     position: relative; z-index: 1;
@@ -361,7 +252,216 @@
     color: var(--faint); letter-spacing: 0.04em;
   }
 
-  /* ── ANIMATIONS ── */
+  /* ── HOW IT WORKS ── */
+  .how {
+    position: relative; z-index: 1;
+    max-width: 1060px; margin: 0 auto;
+    padding: 5.5rem 2.5rem 6rem;
+  }
+  .how-tag {
+    font-family: var(--mono); font-size: 0.65rem;
+    color: var(--green); letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 0.7rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .how-tag::before { content: '//'; opacity: 0.5; }
+  .how-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  @media (max-width: 700px) {
+    .steps { grid-template-columns: 1fr; gap: 0; }
+  }
+
+  .step {
+    padding: 0 2.5rem 0 0;
+    position: relative;
+  }
+  .step:last-child { padding-right: 0; }
+  @media (max-width: 700px) {
+    .step { padding: 0 0 2.5rem 3.5rem; }
+    .step:last-child { padding-bottom: 0; }
+  }
+
+  .step-num {
+    font-family: var(--mono); font-size: 0.62rem;
+    font-weight: 500; letter-spacing: 0.12em;
+    color: var(--green); margin-bottom: 1rem;
+  }
+
+  .step-connector { display: none; }
+  @media (min-width: 701px) {
+    .step { padding: 0 2rem; }
+    .step:first-child { padding-left: 0; }
+    .step:last-child { padding-right: 0; }
+    .step-connector {
+      display: block;
+      position: absolute;
+      top: 54px; right: -1px;
+      width: 2rem; height: 1px;
+      background: linear-gradient(90deg, var(--border2), transparent);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .step { position: relative; }
+    .step-num { position: absolute; left: 0; top: 0; }
+    .step-connector {
+      display: block;
+      position: absolute;
+      left: 18px; top: 58px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--border2), transparent);
+    }
+  }
+
+  .step-icon {
+    width: 46px; height: 46px;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.1rem;
+    position: relative; z-index: 1;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .step:hover .step-icon {
+    border-color: var(--green-md);
+    background: var(--surface);
+  }
+
+  .step h3 {
+    font-size: 0.95rem; font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.55rem;
+    line-height: 1.35;
+  }
+  .step p {
+    font-size: 0.85rem; color: var(--muted);
+    line-height: 1.75;
+  }
+
+  @media (max-width: 600px) {
+    .how { padding: 4rem 1.5rem 5rem; }
+  }
+
+  /* ── WAITLIST ── */
+  .waitlist {
+    margin-top: 1.5rem;
+    animation: fadeUp 0.5s 0.3s ease both;
+  }
+  .waitlist-label {
+    font-family: var(--mono); font-size: 0.67rem;
+    color: var(--faint); letter-spacing: 0.06em;
+    margin-bottom: 0.7rem;
+  }
+  .waitlist-form {
+    display: flex; align-items: center;
+    justify-content: center; gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .waitlist-input {
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    font-family: var(--ui); font-size: 0.875rem;
+    color: var(--text);
+    width: 240px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .waitlist-input::placeholder { color: var(--faint); }
+  .waitlist-input:focus { border-color: var(--green-md); }
+  .waitlist-btn {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 0.65rem 1.2rem;
+    font-family: var(--ui); font-size: 0.875rem; font-weight: 600;
+    color: var(--green);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .waitlist-btn:hover {
+    border-color: var(--green-md);
+    background: var(--green-lo);
+  }
+
+  /* ── TRUST LINE ── */
+  .hero-trust {
+    margin-top: 1.1rem;
+    font-family: var(--mono); font-size: 0.68rem;
+    color: var(--faint); letter-spacing: 0.05em;
+    animation: fadeUp 0.5s 0.36s ease both;
+  }
+
+  /* ── WHY SECTION ── */
+  .why {
+    position: relative; z-index: 1;
+    max-width: 1060px; margin: 0 auto;
+    padding: 5.5rem 2.5rem 6rem;
+  }
+  .why-tag {
+    font-family: var(--mono); font-size: 0.65rem;
+    color: var(--green); letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 0.7rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .why-tag::before { content: '//'; opacity: 0.5; }
+  .why-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 2.5rem;
+  }
+  .why-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  @media (max-width: 640px) {
+    .why-list { grid-template-columns: 1fr; }
+  }
+  .why-item {
+    background: var(--card);
+    padding: 1.8rem 2rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .why-item:hover { background: var(--surface); }
+  .why-item::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--green) 50%, transparent 90%);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .why-item:hover::after { opacity: 1; }
+  .why-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .why-item strong {
+    display: block; font-size: 0.95rem; font-weight: 700;
+    letter-spacing: -0.01em; margin-bottom: 0.35rem; color: var(--text);
+  }
+  .why-item p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; }
+  @media (max-width: 600px) {
+    .why { padding: 4rem 1.5rem 5rem; }
+  }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: none; }
@@ -369,7 +469,6 @@
   @media (max-width: 600px) {
     nav { padding: 0 1.25rem; }
     .hero { padding: 5.5rem 1.5rem 5rem; }
-    .how { padding: 4rem 1.5rem 5rem; }
     .features { padding: 4rem 1.5rem 5rem; }
     footer { padding: 1.5rem; }
   }
@@ -391,14 +490,14 @@
     <div class="hero-label-line"></div>
   </div>
 
-  <h1>Press one button.<br><span>Understand your PC.</span></h1>
+  <h1>Press one button.<br><span>Understand what's wrong.</span></h1>
 
   <p class="sub">
     PCLabs runs a full health scan and gaming performance check in under 90 seconds — then tells you exactly what's wrong and what to do, in plain English.
   </p>
 
   <div class="cta-row">
-    <a href="#" class="btn-dl">
+    <a href="mailto:youremail@gmail.com" class="btn-dl">
       <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -407,12 +506,60 @@
     <a href="#features" class="btn-link">See what it does →</a>
   </div>
 
+  <div class="waitlist">
+    <p class="waitlist-label">Join the waitlist — get notified when it's ready</p>
+    <form class="waitlist-form" action="mailto:youremail@gmail.com" method="get" enctype="text/plain">
+      <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" required />
+      <button class="waitlist-btn" type="submit">Notify me</button>
+    </form>
+  </div>
+
+  <p class="hero-trust">Built for everyday users. No technical knowledge required.</p>
+
   <div class="hero-meta">
     <span>Windows 10 / 11</span>
     <span>Free to try</span>
     <span>No account needed</span>
     <span>No bloatware</span>
   </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- ── WHY YOUR PC FEELS SLOW ── -->
+<section class="why">
+  <div class="why-tag">Sound familiar?</div>
+  <div class="why-title">Why your PC feels slow or broken</div>
+  <ul class="why-list">
+    <li class="why-item">
+      <span class="why-icon">🎮</span>
+      <div>
+        <strong>Low FPS or stuttering in games</strong>
+        <p>Your hardware may be capable, but misconfigured settings or a hidden bottleneck is killing performance.</p>
+      </div>
+    </li>
+    <li class="why-item">
+      <span class="why-icon">💥</span>
+      <div>
+        <strong>Random crashes or freezes</strong>
+        <p>Could be a driver conflict, failing drive, or RAM issue — problems that are invisible until something breaks.</p>
+      </div>
+    </li>
+    <li class="why-item">
+      <span class="why-icon">🌡️</span>
+      <div>
+        <strong>High temperatures or loud fans</strong>
+        <p>Thermal throttling silently slows your CPU and GPU down. You won't see it in Task Manager.</p>
+      </div>
+    </li>
+    <li class="why-item">
+      <span class="why-icon">❓</span>
+      <div>
+        <strong>You don't know what's wrong</strong>
+        <p>Something feels off but you can't pinpoint it. PCLabs tells you exactly what it found and how confident it is.</p>
+      </div>
+    </li>
+  </ul>
 </section>
 
 <hr class="rule"/>
