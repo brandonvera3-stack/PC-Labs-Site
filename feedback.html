@@ -9,12 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <script defer data-domain="thepclabs.com" src="https://plausible.io/js/script.js"></script>
 <style>
-  :root{
-    --bg:#080b10;--surface:#0e1219;--card:#121720;--border:#1c2333;--border2:#263044;
-    --green:#00d97e;--green-lo:rgba(0,217,126,0.10);--green-md:rgba(0,217,126,0.22);
-    --text:#e8edf5;--muted:#7b8ea8;--faint:#313d52;
-    --mono:'JetBrains Mono',monospace;--ui:'Outfit',sans-serif;
-  }
+  :root{--bg:#080b10;--surface:#0e1219;--card:#121720;--border:#1c2333;--border2:#263044;--green:#00d97e;--green-lo:rgba(0,217,126,0.10);--green-md:rgba(0,217,126,0.22);--text:#e8edf5;--muted:#7b8ea8;--faint:#313d52;--mono:'JetBrains Mono',monospace;--ui:'Outfit',sans-serif;}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:var(--ui);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
@@ -74,8 +69,8 @@
   <a href="/" class="logo"><b>PC</b>Labs</a>
   <div class="nav-links">
     <a href="/">Home</a>
-    <a href="download.html">Download</a>
-    <a href="app-preview.html">App Preview</a>
+    <a href="/download.html">Download</a>
+    <a href="/app-preview.html">App Preview</a>
   </div>
   <div class="nav-pill"><div class="pill-dot"></div>Beta</div>
 </nav>
@@ -86,18 +81,12 @@
     <h1>Help us<br><span>build better.</span></h1>
     <p class="page-sub">PCLabs is an early beta. Every bug report, suggestion, and "this didn't work" message makes the product better. There are no wrong answers — we read everything.</p>
     <div class="feedback-types">
-      <div class="fb-type">
-        <span class="fb-type-icon">🐛</span>
-        <div><strong>Bug or error</strong><span>Something crashed, didn't load, or returned a wrong result.</span></div>
-      </div>
-      <div class="fb-type">
-        <span class="fb-type-icon">💡</span>
-        <div><strong>Feature suggestion</strong><span>A game, check, or feature you'd like to see added.</span></div>
-      </div>
-      <div class="fb-type">
-        <span class="fb-type-icon">📊</span>
-        <div><strong>Scan result feedback</strong><span>A result that seemed wrong, confusing, or unhelpful.</span></div>
-      </div>
+      <div class="fb-type"><span class="fb-type-icon">🐛</span><div><strong>Bug or error</strong><span>Something crashed, didn't load, or returned a wrong result.</span></div></div>
+      <div class="fb-type"><span class="fb-type-icon">💡</span><div><strong>Feature suggestion</strong><span>A game, check, or feature you'd like to see added.</span></div></div>
+      <div class="fb-type"><span class="fb-type-icon">📊</span><div><strong>Scan result feedback</strong><span>A result that seemed wrong, confusing, or unhelpful.</span></div></div>
+    </div>
+    <div style="margin-top:1.5rem;">
+      <a href="/" style="font-family:var(--mono);font-size:0.72rem;color:var(--faint);text-decoration:none;letter-spacing:0.04em;">← Back to Home</a>
     </div>
   </div>
   <div class="form-card">
@@ -129,8 +118,8 @@
   <div class="footer-logo"><b>PC</b>Labs</div>
   <div class="footer-links">
     <a href="/">Home</a>
-    <a href="download.html">Download</a>
-    <a href="app-preview.html">App Preview</a>
+    <a href="/download.html">Download</a>
+    <a href="/app-preview.html">App Preview</a>
     <a href="mailto:hello@thepclabs.com">Contact</a>
   </div>
   <div class="footer-copy">© 2026 PCLabs</div>
