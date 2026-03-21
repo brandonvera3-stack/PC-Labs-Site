@@ -166,6 +166,115 @@
   /* ── DIVIDER ── */
   .rule { border: none; border-top: 1px solid var(--border); }
 
+  /* ── HOW IT WORKS ── */
+  .how {
+    position: relative; z-index: 1;
+    max-width: 1060px; margin: 0 auto;
+    padding: 5.5rem 2.5rem 6rem;
+  }
+  .how-tag {
+    font-family: var(--mono); font-size: 0.65rem;
+    color: var(--green); letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 0.7rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .how-tag::before { content: '//'; opacity: 0.5; }
+  .how-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  @media (max-width: 700px) {
+    .steps { grid-template-columns: 1fr; gap: 0; }
+  }
+
+  .step {
+    padding: 0 2.5rem 0 0;
+    position: relative;
+  }
+  .step:last-child { padding-right: 0; }
+  @media (max-width: 700px) {
+    .step { padding: 0 0 2.5rem 3.5rem; }
+    .step:last-child { padding-bottom: 0; }
+  }
+
+  .step-num {
+    font-family: var(--mono); font-size: 0.62rem;
+    font-weight: 500; letter-spacing: 0.12em;
+    color: var(--green); margin-bottom: 1rem;
+  }
+
+  /* horizontal connector line (desktop) */
+  .step-connector {
+    display: none;
+  }
+  @media (min-width: 701px) {
+    .step { padding: 0 2rem; }
+    .step:first-child { padding-left: 0; }
+    .step:last-child { padding-right: 0; }
+    .step-connector {
+      display: block;
+      position: absolute;
+      top: 54px;
+      right: -1px;
+      width: 2rem;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border2), transparent);
+    }
+  }
+
+  /* vertical connector line (mobile) */
+  @media (max-width: 700px) {
+    .step { position: relative; }
+    .step-num {
+      position: absolute;
+      left: 0; top: 0;
+    }
+    .step-connector {
+      display: block;
+      position: absolute;
+      left: 18px;
+      top: 58px;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--border2), transparent);
+    }
+  }
+
+  .step-icon {
+    width: 46px; height: 46px;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.1rem;
+    position: relative; z-index: 1;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .step:hover .step-icon {
+    border-color: var(--green-md);
+    background: var(--surface);
+  }
+
+  .step h3 {
+    font-size: 0.95rem; font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.55rem;
+    line-height: 1.35;
+  }
+  .step p {
+    font-size: 0.85rem; color: var(--muted);
+    line-height: 1.75;
+  }
+
   /* ── FEATURES ── */
   .features {
     position: relative; z-index: 1;
@@ -260,6 +369,7 @@
   @media (max-width: 600px) {
     nav { padding: 0 1.25rem; }
     .hero { padding: 5.5rem 1.5rem 5rem; }
+    .how { padding: 4rem 1.5rem 5rem; }
     .features { padding: 4rem 1.5rem 5rem; }
     footer { padding: 1.5rem; }
   }
@@ -302,6 +412,42 @@
     <span>Free to try</span>
     <span>No account needed</span>
     <span>No bloatware</span>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how">
+  <div class="how-tag">How it works</div>
+  <div class="how-title">Three steps. No tech knowledge needed.</div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-connector"></div>
+      <div class="step-icon">🖱️</div>
+      <h3>Run a one-click scan</h3>
+      <p>Launch PCLabs and hit the single scan button. It reads your hardware, thermals, drivers, installed games, and system logs — all in under 90 seconds.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-connector"></div>
+      <div class="step-icon">🔍</div>
+      <h3>See likely issues and performance bottlenecks</h3>
+      <p>Get a clear breakdown of what's wrong — CPU throttling, outdated drivers, RAM in the wrong slots — with a confidence level shown for every finding.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-connector" style="opacity:0"></div>
+      <div class="step-icon">✅</div>
+      <h3>Get plain-English fixes and game optimization recommendations</h3>
+      <p>Each issue comes with a specific action: what to do, how long it takes, and whether it's free. For supported games, you'll get per-title settings tuned to your exact hardware.</p>
+    </div>
+
   </div>
 </section>
 
