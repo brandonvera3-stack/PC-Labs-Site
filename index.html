@@ -3,1139 +3,349 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ScanMyPC — PC Diagnostics & Gaming Optimization</title>
+<title>PCLabs — PC Diagnostics & Gaming Optimization</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --bg: #0b0f1a;
-    --bg2: #111827;
-    --bg3: #1a2235;
-    --border: #1e2d45;
-    --blue: #3b82f6;
-    --blue-dim: #1d4ed8;
-    --cyan: #06b6d4;
-    --green: #22c55e;
-    --amber: #f59e0b;
-    --red: #ef4444;
-    --text: #e2e8f0;
-    --text-dim: #94a3b8;
-    --text-faint: #475569;
-    --mono: 'DM Mono', monospace;
-    --sans: 'DM Sans', sans-serif;
-    --display: 'Syne', sans-serif;
-  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0a0a0f;
+    --surface:   #111118;
+    --card:      #16161f;
+    --border:    #22222e;
+    --blue:      #4f8ef7;
+    --blue-glow: rgba(79,142,247,0.15);
+    --text:      #f0f0f5;
+    --muted:     #8888a0;
+    --faint:     #3a3a50;
+  }
+
   html { scroll-behavior: smooth; }
+
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: var(--sans);
+    font-family: 'Inter', sans-serif;
     font-size: 15px;
     line-height: 1.6;
+    min-height: 100vh;
     overflow-x: hidden;
+  }
+
+  /* subtle grid texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--faint) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
   }
 
   /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2rem;
-    height: 60px;
-    background: rgba(11,15,26,0.92);
-    backdrop-filter: blur(12px);
+    padding: 0 2.5rem;
+    height: 58px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
-  .nav-logo { font-family: var(--display); font-size: 1.1rem; font-weight: 800; color: var(--blue); letter-spacing: -0.01em; }
-  .nav-logo span { color: var(--text-dim); font-weight: 700; }
-  .nav-links { display: flex; gap: 1.8rem; }
-  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.15s; }
-  .nav-links a:hover { color: var(--text); }
-  .nav-cta { background: var(--blue); color: #fff; border: none; padding: 0.45rem 1.1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: var(--sans); transition: background 0.15s; }
-  .nav-cta:hover { background: var(--blue-dim); }
 
-  /* SECTIONS */
-  section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
-  .section-label { font-family: var(--mono); font-size: 0.72rem; color: var(--blue); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.8rem; }
-  h1 { font-family: var(--display); font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
-  h2 { font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
-  h3 { font-family: var(--sans); font-size: 1rem; font-weight: 600; }
-  p { color: var(--text-dim); line-height: 1.75; }
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .logo span { color: var(--blue); }
+
+  .nav-pill {
+    background: var(--blue-glow);
+    border: 1px solid rgba(79,142,247,0.3);
+    color: var(--blue);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 100px;
+  }
 
   /* HERO */
-  #hero { padding-top: 6rem; padding-bottom: 4rem; position: relative; }
-  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); border-radius: 100px; padding: 0.3rem 0.9rem; font-family: var(--mono); font-size: 0.72rem; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem; }
-  .hero-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); display: inline-block; }
-  .hero-title { margin-bottom: 1.5rem; }
-  .hero-title em { color: var(--blue); font-style: normal; }
-  .hero-sub { font-size: 1.05rem; max-width: 560px; margin-bottom: 2rem; }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
-  .btn-primary { background: var(--blue); color: #fff; border: none; padding: 0.75rem 1.6rem; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: var(--sans); transition: all 0.15s; }
-  .btn-primary:hover { background: var(--blue-dim); transform: translateY(-1px); }
-  .btn-ghost { background: transparent; color: var(--text-dim); border: 1px solid var(--border); padding: 0.75rem 1.6rem; border-radius: 8px; font-size: 0.95rem; font-weight: 500; cursor: pointer; font-family: var(--sans); transition: all 0.15s; }
-  .btn-ghost:hover { border-color: var(--blue); color: var(--text); }
-  .hero-trust { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-  .trust-item { font-family: var(--mono); font-size: 0.72rem; color: var(--text-faint); letter-spacing: 0.04em; display: flex; align-items: center; gap: 0.4rem; }
-  .trust-item::before { content: '✓'; color: var(--green); font-size: 0.7rem; }
+  .hero {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+  }
 
-  /* SCAN DEMO BAR */
-  .scan-demo { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 4rem; }
-  .scan-demo-input { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 0.6rem 1rem; font-family: var(--mono); font-size: 0.82rem; color: var(--text-dim); }
-  .scan-demo-badge { font-family: var(--mono); font-size: 0.7rem; color: var(--text-faint); }
+  /* blue radial glow behind hero */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 500px;
+    background: radial-gradient(ellipse at center top, rgba(79,142,247,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
 
-  /* FEATURES GRID */
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
-  .feature-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s; }
-  .feature-card:hover { border-color: var(--blue); }
-  .feature-icon { font-size: 1.4rem; margin-bottom: 0.9rem; }
-  .feature-card h3 { font-size: 0.95rem; margin-bottom: 0.4rem; color: var(--text); }
-  .feature-card p { font-size: 0.85rem; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 6px var(--blue);
+  }
 
-  /* DASHBOARD DEMO */
-  #dashboard { max-width: 1100px; }
-  .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  @media(max-width: 700px) { .dashboard-grid { grid-template-columns: 1fr; } }
-  .dash-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; }
-  .dash-label { font-family: var(--mono); font-size: 0.68rem; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
-  .score-big { font-family: var(--display); font-size: 3rem; font-weight: 800; line-height: 1; }
-  .score-green { color: var(--green); }
-  .score-amber { color: var(--amber); }
-  .score-sub { font-size: 0.82rem; color: var(--text-faint); margin-top: 0.3rem; }
-  .score-bar { height: 4px; background: var(--bg3); border-radius: 4px; margin-top: 1rem; }
-  .score-bar-fill { height: 100%; border-radius: 4px; }
-  .issue-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
-  .issue-item { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.85rem; }
-  .issue-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 0.35rem; flex-shrink: 0; }
-  .dot-red { background: var(--red); }
-  .dot-amber { background: var(--amber); }
-  .dot-blue { background: var(--blue); }
-  .issue-title { color: var(--text); font-weight: 500; }
-  .issue-desc { color: var(--text-faint); font-size: 0.78rem; }
-  .confidence-tag { font-family: var(--mono); font-size: 0.65rem; color: var(--text-faint); border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.35rem; margin-left: auto; flex-shrink: 0; }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    max-width: 680px;
+    margin-bottom: 1.25rem;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--blue);
+  }
 
-  /* BENCHMARK SECTION */
-  .bench-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
-  .bench-table th { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border); }
-  .bench-table td { padding: 0.75rem 0.8rem; border-bottom: 1px solid rgba(30,45,69,0.5); font-size: 0.88rem; }
-  .bench-table tr:last-child td { border-bottom: none; }
-  .perf-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
-  .perf-bar { height: 6px; border-radius: 3px; }
-  .fps-val { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; }
-  .rating-badge { font-family: var(--mono); font-size: 0.68rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 500; }
-  .badge-great { background: rgba(34,197,94,0.15); color: var(--green); }
-  .badge-ok { background: rgba(245,158,11,0.15); color: var(--amber); }
-  .badge-poor { background: rgba(239,68,68,0.15); color: var(--red); }
+  .subheadline {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
 
-  /* GAME RECS */
-  .game-list { display: flex; flex-direction: column; gap: 0.9rem; }
-  .game-row { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 1rem; }
-  .game-title { font-weight: 600; font-size: 0.92rem; margin-bottom: 0.2rem; }
-  .game-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.4rem; }
-  .game-tag { background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; font-family: var(--mono); font-size: 0.63rem; color: var(--text-faint); padding: 0.15rem 0.4rem; }
-  .rec-list { list-style: none; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.25rem; }
-  .rec-list li { font-size: 0.8rem; color: var(--text-dim); display: flex; gap: 0.4rem; }
-  .rec-list li::before { content: '→'; color: var(--blue); flex-shrink: 0; }
-  .perf-target { font-family: var(--mono); font-size: 0.75rem; color: var(--green); font-weight: 500; text-align: right; }
-  .perf-target-label { font-size: 0.7rem; color: var(--text-faint); text-align: right; }
+  .cta-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
 
-  /* SOFTWARE RECS */
-  .sw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
-  .sw-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; }
-  .sw-card-top { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.6rem; }
-  .sw-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-  .sw-icon-blue { background: rgba(59,130,246,0.15); }
-  .sw-icon-green { background: rgba(34,197,94,0.15); }
-  .sw-icon-amber { background: rgba(245,158,11,0.15); }
-  .sw-icon-cyan { background: rgba(6,182,212,0.15); }
-  .sw-name { font-weight: 600; font-size: 0.9rem; }
-  .sw-why { font-size: 0.8rem; color: var(--text-dim); }
-  .sw-trigger { font-family: var(--mono); font-size: 0.67rem; color: var(--blue); margin-top: 0.5rem; }
-  .sw-free { font-family: var(--mono); font-size: 0.65rem; color: var(--green); border: 1px solid rgba(34,197,94,0.25); border-radius: 3px; padding: 0.1rem 0.3rem; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--blue);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 0 0 0 rgba(79,142,247,0);
+    text-decoration: none;
+  }
+  .btn-primary:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(79,142,247,0.3);
+  }
+  .btn-arrow { font-size: 1rem; }
 
-  /* PRICING */
-  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-  @media(max-width:720px) { .pricing-grid { grid-template-columns: 1fr; } }
-  .pricing-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem; position: relative; }
-  .pricing-card.featured { border-color: var(--blue); }
-  .featured-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--blue); color: #fff; font-family: var(--mono); font-size: 0.67rem; font-weight: 500; padding: 0.2rem 0.8rem; border-radius: 100px; letter-spacing: 0.06em; white-space: nowrap; }
-  .plan-name { font-family: var(--display); font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem; }
-  .plan-price { font-family: var(--display); font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0 0.2rem; }
-  .plan-price span { font-size: 0.85rem; font-weight: 400; font-family: var(--sans); color: var(--text-faint); }
-  .plan-desc { font-size: 0.82rem; color: var(--text-faint); margin-bottom: 1.2rem; }
-  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.5rem; }
-  .plan-features li { font-size: 0.84rem; color: var(--text-dim); display: flex; gap: 0.5rem; align-items: flex-start; }
-  .plan-features li::before { content: '✓'; color: var(--green); font-size: 0.8rem; margin-top: 0.1rem; flex-shrink: 0; }
-  .plan-features li.no::before { content: '–'; color: var(--text-faint); }
-  .plan-features li.no { color: var(--text-faint); }
-  .plan-btn { width: 100%; padding: 0.65rem; border-radius: 7px; font-size: 0.88rem; font-weight: 600; cursor: pointer; font-family: var(--sans); border: none; transition: all 0.15s; }
-  .plan-btn-primary { background: var(--blue); color: #fff; }
-  .plan-btn-primary:hover { background: var(--blue-dim); }
-  .plan-btn-ghost { background: transparent; color: var(--text-dim); border: 1px solid var(--border); }
-  .plan-btn-ghost:hover { border-color: var(--blue); color: var(--text); }
+  .cta-note {
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
 
-  /* COMPARISON TABLE */
-  .comp-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
-  .comp-table th { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); padding: 0.8rem 1rem; border-bottom: 2px solid var(--border); text-align: center; }
-  .comp-table th:first-child { text-align: left; }
-  .comp-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(30,45,69,0.5); font-size: 0.85rem; text-align: center; color: var(--text-dim); }
-  .comp-table td:first-child { text-align: left; color: var(--text); }
-  .comp-table tr:last-child td { border-bottom: none; }
-  .comp-table .section-row td { background: rgba(26,34,53,0.6); color: var(--text-faint); font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.5rem 1rem; }
-  .check { color: var(--green); }
-  .dash { color: var(--text-faint); }
+  /* FEATURES */
+  .features {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem 8rem;
+    border-top: 1px solid var(--border);
+  }
 
-  /* FAQ */
-  .faq-list { display: flex; flex-direction: column; gap: 0; }
-  .faq-item { border-bottom: 1px solid var(--border); }
-  .faq-q { padding: 1.1rem 0; cursor: pointer; font-weight: 500; font-size: 0.92rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; user-select: none; }
-  .faq-q:hover { color: var(--blue); }
-  .faq-chevron { color: var(--text-faint); font-size: 0.8rem; transition: transform 0.2s; flex-shrink: 0; }
-  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .faq-a-inner { padding-bottom: 1rem; font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
-  .faq-item.open .faq-chevron { transform: rotate(180deg); }
-  .faq-item.open .faq-a { max-height: 300px; }
+  /* divider lines between cards */
+  .features::before {
+    content: '';
+    position: absolute;
+    top: 0; left: calc(2rem + 33.33%);
+    width: 1px; height: 100%;
+    background: var(--border);
+  }
+  .features::after {
+    content: '';
+    position: absolute;
+    top: 0; left: calc(2rem + 66.66%);
+    width: 1px; height: 100%;
+    background: var(--border);
+  }
 
-  /* BOTTLENECK SECTION */
-  .bottleneck-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  @media(max-width:640px) { .bottleneck-grid { grid-template-columns: 1fr; } }
-  .bottleneck-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.3rem; }
-  .bottleneck-header { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
-  .bottleneck-icon { font-size: 1.2rem; }
-  .bottleneck-name { font-weight: 600; font-size: 0.92rem; }
-  .bottleneck-util { font-family: var(--mono); font-size: 0.75rem; margin-left: auto; }
-  .util-bar-wrap { margin-bottom: 0.6rem; }
-  .util-label { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.7rem; color: var(--text-faint); margin-bottom: 0.3rem; }
-  .util-bar { height: 6px; background: var(--bg3); border-radius: 3px; }
-  .util-fill { height: 100%; border-radius: 3px; }
-  .bottleneck-note { font-size: 0.79rem; color: var(--text-faint); margin-top: 0.8rem; line-height: 1.6; }
+  @media (max-width: 680px) {
+    .features {
+      grid-template-columns: 1fr;
+    }
+    .features::before, .features::after { display: none; }
+  }
+
+  .card {
+    padding: 2.5rem 2rem;
+    transition: background 0.2s;
+  }
+  .card:hover { background: rgba(79,142,247,0.04); }
+
+  .card-icon {
+    width: 42px; height: 42px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .card p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--blue);
+    margin-top: 1rem;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+  }
+  .card-link:hover { opacity: 1; }
 
   /* FOOTER */
-  footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; gap: 1rem; }
-  .footer-logo { font-family: var(--display); font-size: 0.95rem; font-weight: 800; color: var(--text-dim); }
-  .footer-note { font-family: var(--mono); font-size: 0.7rem; color: var(--text-faint); }
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 1.75rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
-  /* TABS */
-  .tab-bar { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem; width: fit-content; }
-  .tab { padding: 0.5rem 1.1rem; font-size: 0.82rem; font-weight: 500; cursor: pointer; border: none; background: transparent; color: var(--text-faint); font-family: var(--sans); transition: all 0.15s; }
-  .tab.active { background: var(--blue); color: #fff; }
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
+  .footer-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .footer-logo span { color: var(--blue); }
 
-  /* MISC */
-  .divider { border: none; border-top: 1px solid var(--border); }
-  .mono-tag { font-family: var(--mono); font-size: 0.72rem; }
-  .highlight-box { background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2); border-radius: 10px; padding: 1.2rem 1.5rem; margin-top: 1.5rem; }
-  .highlight-box p { font-size: 0.88rem; }
-  .next-actions { display: flex; flex-direction: column; gap: 0.6rem; }
-  .action-row { display: flex; align-items: center; gap: 0.9rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem 1rem; }
-  .action-num { font-family: var(--mono); font-size: 0.7rem; color: var(--blue); background: rgba(59,130,246,0.1); border-radius: 4px; padding: 0.2rem 0.4rem; flex-shrink: 0; }
-  .action-text { font-size: 0.85rem; }
-  .action-effort { font-family: var(--mono); font-size: 0.68rem; color: var(--text-faint); margin-left: auto; flex-shrink: 0; }
-  .full-width-bg { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-  /* scroll animation */
-  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
-  .fade-up.visible { opacity: 1; transform: none; }
+  .footer-note {
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">Scan<span>MyPC</span></div>
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#gaming">Gaming</a>
-    <a href="#benchmark">Benchmark</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#faq">FAQ</a>
-  </div>
-  <button class="nav-cta" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Get Started Free</button>
+  <div class="logo">PC<span>Labs</span></div>
+  <div class="nav-pill">Beta</div>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-eyebrow">Windows PC Diagnostics & Gaming Optimization</div>
-  <h1 class="hero-title">Find out what's slowing<br><em>you and your games</em> down.</h1>
-  <p class="hero-sub">ScanMyPC checks your PC's health, diagnoses performance issues, and recommends game settings — in plain English. No tech degree required.</p>
-  <div class="hero-actions">
-    <button class="btn-primary">Run Free Scan</button>
-    <button class="btn-ghost" onclick="document.getElementById('benchmark').scrollIntoView({behavior:'smooth'})">See Benchmark Demo</button>
+<section class="hero">
+  <div class="hero-badge">
+    <div class="hero-badge-dot"></div>
+    PC Diagnostics & Gaming Optimization
   </div>
-  <div class="hero-trust">
-    <div class="trust-item">No bloatware installed</div>
-    <div class="trust-item">Recommendations show confidence levels</div>
-    <div class="trust-item">No fake "speed boost" promises</div>
-    <div class="trust-item">Plain English results</div>
+
+  <h1>Know exactly what's <em>slowing your PC</em> down.</h1>
+
+  <p class="subheadline">
+    PCLabs diagnoses performance issues and optimizes your games — with honest results in plain English. No bloatware, no fake fixes.
+  </p>
+
+  <div class="cta-wrap">
+    <a href="#" class="btn-primary">
+      Download Beta <span class="btn-arrow">↓</span>
+    </a>
   </div>
-  <div style="margin-top:2.5rem;" class="scan-demo">
-    <div class="scan-demo-input">📡 &nbsp;Scanning: Elden Ring performance profile… CPU usage 94% | RAM 78% | GPU 71%</div>
-    <div class="scan-demo-badge mono-tag">DEMO · 3 issues found</div>
-  </div>
+  <p class="cta-note" style="margin-top:0.9rem;">Windows 10/11 · Free to try · No account needed</p>
 </section>
 
-<!-- FEATURES -->
-<section id="features" class="fade-up">
-  <div class="section-label">What it does</div>
-  <h2>Two things, done well.</h2>
-  <p style="max-width:520px; margin-bottom:2rem;">We don't try to fix everything. ScanMyPC focuses on PC health diagnostics and gaming performance — the two areas where most Windows users are flying blind.</p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🩺</div>
-      <h3>One-Click PC Diagnostics</h3>
-      <p>Scans your system for common issues: overheating, RAM pressure, failing drives, driver conflicts, and startup bloat. Results in 90 seconds.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎮</div>
-      <h3>Gaming Optimization</h3>
-      <p>Detects which games you have installed and recommends specific in-game settings tuned to your actual hardware — not generic presets.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3>Benchmark & Compare</h3>
-      <p>Run a lightweight gaming benchmark and see how your PC performs versus similar hardware, with honest expected FPS ranges per game.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔍</div>
-      <h3>Bottleneck Analysis</h3>
-      <p>Identifies if your CPU, GPU, or RAM is the likely limiting factor in your setup — and explains what that actually means for gaming.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🛠️</div>
-      <h3>Software Recommendations</h3>
-      <p>Based on detected issues, suggests free tools like MSI Afterburner, CrystalDiskInfo, or driver utilities — with a reason for each suggestion.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📋</div>
-      <h3>Confidence Levels & Evidence</h3>
-      <p>Every finding shows a confidence level and what data it's based on. We don't guess and tell you we're certain — you see the reasoning.</p>
-    </div>
-  </div>
-</section>
+<div class="features">
 
-<!-- DASHBOARD DEMO -->
-<div class="full-width-bg" style="margin: 0; padding: 1px 0;">
-<section id="dashboard" class="fade-up">
-  <div class="section-label">Dashboard Preview</div>
-  <h2>Your PC health, at a glance.</h2>
-  <p style="margin-bottom:2rem; max-width:520px;">A real scan produces this kind of summary — organized so you can see what matters first, not buried in raw numbers.</p>
-
-  <div class="dashboard-grid" style="margin-bottom:1rem;">
-    <!-- Health Score -->
-    <div class="dash-card">
-      <div class="dash-label">PC Health Score</div>
-      <div class="score-big score-amber">74<span style="font-size:1.2rem; color:var(--text-faint)">/100</span></div>
-      <div class="score-sub">Some issues detected — see below</div>
-      <div class="score-bar"><div class="score-bar-fill" style="width:74%; background: var(--amber);"></div></div>
-    </div>
-    <!-- Gaming Readiness -->
-    <div class="dash-card">
-      <div class="dash-label">Gaming Readiness Score</div>
-      <div class="score-big score-green">81<span style="font-size:1.2rem; color:var(--text-faint)">/100</span></div>
-      <div class="score-sub">Hardware is capable for most supported titles</div>
-      <div class="score-bar"><div class="score-bar-fill" style="width:81%; background: var(--green);"></div></div>
-    </div>
+  <div class="card">
+    <div class="card-icon">🩺</div>
+    <h3>One-Click Diagnostics</h3>
+    <p>Scans for overheating, driver conflicts, RAM issues, and failing drives. Results in under 90 seconds, explained without jargon.</p>
+    <a href="#" class="card-link">Learn more →</a>
   </div>
 
-  <div class="dashboard-grid" style="margin-bottom:1rem;">
-    <!-- Top Issues -->
-    <div class="dash-card">
-      <div class="dash-label">Top Likely Issues</div>
-      <ul class="issue-list">
-        <li class="issue-item">
-          <div class="issue-dot dot-red"></div>
-          <div>
-            <div class="issue-title">CPU thermal throttling detected</div>
-            <div class="issue-desc">CPU temps exceeding 90°C under load — likely reducing clock speeds</div>
-          </div>
-          <div class="confidence-tag">87% conf.</div>
-        </li>
-        <li class="issue-item">
-          <div class="issue-dot dot-amber"></div>
-          <div>
-            <div class="issue-title">GPU driver is 8 months old</div>
-            <div class="issue-desc">Driver v531.18 — newer versions have DLSS & perf fixes</div>
-          </div>
-          <div class="confidence-tag">high</div>
-        </li>
-        <li class="issue-item">
-          <div class="issue-dot dot-blue"></div>
-          <div>
-            <div class="issue-title">RAM running in single-channel</div>
-            <div class="issue-desc">Your 16GB is in one slot — dual-channel would improve throughput ~15%</div>
-          </div>
-          <div class="confidence-tag">confirmed</div>
-        </li>
-      </ul>
-    </div>
-    <!-- Next Actions -->
-    <div class="dash-card">
-      <div class="dash-label">Recommended Next Actions</div>
-      <div class="next-actions">
-        <div class="action-row">
-          <div class="action-num">01</div>
-          <div class="action-text">Update NVIDIA driver to v560.81</div>
-          <div class="action-effort">5 min · free</div>
-        </div>
-        <div class="action-row">
-          <div class="action-num">02</div>
-          <div class="action-text">Clean CPU cooler / reapply thermal paste</div>
-          <div class="action-effort">30 min · ~$8</div>
-        </div>
-        <div class="action-row">
-          <div class="action-num">03</div>
-          <div class="action-text">Move RAM stick to slots 2 & 4 for dual-channel</div>
-          <div class="action-effort">10 min · free</div>
-        </div>
-        <div class="action-row">
-          <div class="action-num">04</div>
-          <div class="action-text">Disable Xbox Game Bar & background recording</div>
-          <div class="action-effort">2 min · free</div>
-        </div>
-      </div>
-    </div>
+  <div class="card">
+    <div class="card-icon">🎮</div>
+    <h3>Gaming Optimization</h3>
+    <p>Detects your installed games and recommends specific in-game settings tuned to your actual hardware — not generic presets.</p>
+    <a href="#" class="card-link">See supported games →</a>
   </div>
 
-  <!-- Benchmark Summary -->
-  <div class="dash-card" style="margin-bottom:1rem;">
-    <div class="dash-label">Benchmark Summary — Detected System: Intel i5-12400F · RTX 3060 · 16GB DDR4</div>
-    <table class="bench-table">
-      <thead>
-        <tr>
-          <th>Game</th>
-          <th>Resolution</th>
-          <th>Estimated FPS</th>
-          <th>Performance</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Cyberpunk 2077</td>
-          <td>1080p</td>
-          <td class="fps-val">54–68 FPS</td>
-          <td>
-            <div class="perf-bar-wrap">
-              <div class="perf-bar" style="width:120px; background:var(--bg3);">
-                <div class="perf-bar-fill" style="width:62%; background:var(--amber); height:6px; border-radius:3px;"></div>
-              </div>
-            </div>
-          </td>
-          <td><span class="rating-badge badge-ok">Playable</span></td>
-        </tr>
-        <tr>
-          <td>Elden Ring</td>
-          <td>1080p</td>
-          <td class="fps-val">58–72 FPS</td>
-          <td>
-            <div class="perf-bar-wrap">
-              <div class="perf-bar" style="width:120px; background:var(--bg3);">
-                <div class="perf-bar-fill" style="width:71%; background:var(--green); height:6px; border-radius:3px;"></div>
-              </div>
-            </div>
-          </td>
-          <td><span class="rating-badge badge-great">Good</span></td>
-        </tr>
-        <tr>
-          <td>Call of Duty: Warzone</td>
-          <td>1080p</td>
-          <td class="fps-val">88–115 FPS</td>
-          <td>
-            <div class="perf-bar-wrap">
-              <div class="perf-bar" style="width:120px; background:var(--bg3);">
-                <div class="perf-bar-fill" style="width:88%; background:var(--green); height:6px; border-radius:3px;"></div>
-              </div>
-            </div>
-          </td>
-          <td><span class="rating-badge badge-great">Great</span></td>
-        </tr>
-        <tr>
-          <td>Microsoft Flight Simulator</td>
-          <td>1080p</td>
-          <td class="fps-val">28–42 FPS</td>
-          <td>
-            <div class="perf-bar-wrap">
-              <div class="perf-bar" style="width:120px; background:var(--bg3);">
-                <div class="perf-bar-fill" style="width:35%; background:var(--red); height:6px; border-radius:3px;"></div>
-              </div>
-            </div>
-          </td>
-          <td><span class="rating-badge badge-poor">Struggling</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="highlight-box">
-      <p>⚠️ <strong style="color:var(--text)">These are estimated ranges</strong>, not guaranteed values. Actual performance depends on your exact thermal state, background processes, and in-game settings. We show ranges based on benchmarks from similar hardware configurations.</p>
-    </div>
+  <div class="card">
+    <div class="card-icon">📊</div>
+    <h3>Benchmark & Bottleneck</h3>
+    <p>Run a lightweight benchmark to see real FPS estimates per game, and find out which component is holding your system back.</p>
+    <a href="#" class="card-link">View demo results →</a>
   </div>
 
-</section>
 </div>
 
-<!-- GAMING OPTIMIZATION -->
-<section id="gaming" class="fade-up">
-  <div class="section-label">Gaming Optimization</div>
-  <h2>Game-specific settings, based on your hardware.</h2>
-  <p style="max-width:540px; margin-bottom:2rem;">For supported titles, ScanMyPC suggests specific in-game settings likely to improve performance on your setup. These are best-fit recommendations, not guaranteed outcomes.</p>
-
-  <div class="tab-bar">
-    <button class="tab active" onclick="switchTab(event,'games')">Per-Game Recommendations</button>
-    <button class="tab" onclick="switchTab(event,'bottleneck')">Bottleneck Analysis</button>
-    <button class="tab" onclick="switchTab(event,'software')">Software Recommendations</button>
-  </div>
-
-  <!-- Per-Game Recs -->
-  <div class="tab-panel active" id="tab-games">
-    <div class="game-list">
-
-      <div class="game-row">
-        <div>
-          <div class="game-title">Cyberpunk 2077</div>
-          <div class="game-tags">
-            <div class="game-tag">RTX 3060</div>
-            <div class="game-tag">1080p</div>
-            <div class="game-tag">High-fidelity</div>
-          </div>
-          <ul class="rec-list">
-            <li>Set Ray Tracing to OFF or Psycho Preset if CPU is bottlenecking</li>
-            <li>Enable DLSS Quality mode — RTX 3060 benefits significantly</li>
-            <li>Lower Crowd Density to Medium — large CPU savings, minimal visual difference</li>
-            <li>Set Volumetric Fog to Medium (disproportionate perf cost at High)</li>
-          </ul>
-        </div>
-        <div>
-          <div class="perf-target">+18–24 FPS</div>
-          <div class="perf-target-label">estimated gain</div>
-        </div>
-      </div>
-
-      <div class="game-row">
-        <div>
-          <div class="game-title">Elden Ring</div>
-          <div class="game-tags">
-            <div class="game-tag">i5-12400F</div>
-            <div class="game-tag">1080p</div>
-            <div class="game-tag">CPU-sensitive</div>
-          </div>
-          <ul class="rec-list">
-            <li>Cap framerate to 60 FPS — engine stutters at uncapped on most hardware</li>
-            <li>Shadows: Medium (High has diminishing returns on 3060)</li>
-            <li>Anti-Aliasing: TAA — FXAA is noticeably softer with minimal perf gain</li>
-          </ul>
-        </div>
-        <div>
-          <div class="perf-target">Smoother</div>
-          <div class="perf-target-label">stability focus</div>
-        </div>
-      </div>
-
-      <div class="game-row">
-        <div>
-          <div class="game-title">Microsoft Flight Simulator 2024</div>
-          <div class="game-tags">
-            <div class="game-tag">CPU bottleneck</div>
-            <div class="game-tag">1080p</div>
-            <div class="game-tag">Demanding</div>
-          </div>
-          <ul class="rec-list">
-            <li>Terrain Level of Detail: 80–100 (highest GPU/RAM cost — reduce first)</li>
-            <li>AI Aircraft Traffic: Low or Off (CPU intensive, minimal visual benefit)</li>
-            <li>Render Scale: 80% with TAA — recovers ~15 FPS on your GPU class</li>
-            <li>Note: this title is CPU-bound on your system — GPU upgrades won't help much here</li>
-          </ul>
-        </div>
-        <div>
-          <div class="perf-target">+12–18 FPS</div>
-          <div class="perf-target-label">estimated gain</div>
-        </div>
-      </div>
-
-    </div>
-    <div class="highlight-box" style="margin-top:1.5rem;">
-      <p>🎮 <strong style="color:var(--text)">Currently supporting 42 titles.</strong> We add profiles based on user requests and hardware data. Don't see your game? <a href="#faq" style="color:var(--blue);">See the FAQ</a> or request it — we'll add it if we have enough hardware profiles to give useful recommendations.</p>
-    </div>
-  </div>
-
-  <!-- Bottleneck -->
-  <div class="tab-panel" id="tab-bottleneck">
-    <p style="margin-bottom:1.5rem;">Based on your hardware and typical game workloads, here's where your system is most likely to hit limits.</p>
-    <div class="bottleneck-grid">
-      <div class="bottleneck-card">
-        <div class="bottleneck-header">
-          <div class="bottleneck-icon">⚙️</div>
-          <div class="bottleneck-name">CPU — Intel i5-12400F</div>
-          <div class="bottleneck-util" style="color:var(--amber)">Primary bottleneck</div>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-label"><span>Avg. gaming load</span><span>88%</span></div>
-          <div class="util-bar"><div class="util-fill" style="width:88%; background:var(--amber);"></div></div>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-label"><span>Thermal headroom</span><span>Low — 91°C peak</span></div>
-          <div class="util-bar"><div class="util-fill" style="width:20%; background:var(--red);"></div></div>
-        </div>
-        <div class="bottleneck-note">Your CPU is the likely bottleneck in open-world and simulation titles. Thermal throttling is reducing effective clock speed — fixing cooling could recover meaningful performance before any hardware upgrade.</div>
-      </div>
-      <div class="bottleneck-card">
-        <div class="bottleneck-header">
-          <div class="bottleneck-icon">🎴</div>
-          <div class="bottleneck-name">GPU — RTX 3060 12GB</div>
-          <div class="bottleneck-util" style="color:var(--green)">Good shape</div>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-label"><span>Avg. gaming load</span><span>71%</span></div>
-          <div class="util-bar"><div class="util-fill" style="width:71%; background:var(--green);"></div></div>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-label"><span>VRAM usage (Cyberpunk)</span><span>9.2 / 12GB</span></div>
-          <div class="util-bar"><div class="util-fill" style="width:77%; background:var(--blue);"></div></div>
-        </div>
-        <div class="bottleneck-note">GPU is performing within expected range. 12GB VRAM headroom is adequate at 1080p but gets tight in some modern titles with high-res textures. Not the primary bottleneck for most games you play.</div>
-      </div>
-      <div class="bottleneck-card">
-        <div class="bottleneck-header">
-          <div class="bottleneck-icon">🧠</div>
-          <div class="bottleneck-name">RAM — 16GB DDR4 (single-channel)</div>
-          <div class="bottleneck-util" style="color:var(--amber)">Suboptimal config</div>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-label"><span>Gaming usage</span><span>78%</span></div>
-          <div class="util-bar"><div class="util-fill" style="width:78%; background:var(--amber);"></div></div>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-label"><span>Bandwidth (single-ch)</span><span>~38 GB/s</span></div>
-          <div class="util-bar"><div class="util-fill" style="width:38%; background:var(--amber);"></div></div>
-        </div>
-        <div class="bottleneck-note">You have 16GB total but it's in one slot. Moving it to slots 2 & 4 on your motherboard would enable dual-channel and approximately double memory bandwidth — often worth 10–15% in CPU-bound games. This is free and takes 10 minutes.</div>
-      </div>
-      <div class="bottleneck-card">
-        <div class="bottleneck-header">
-          <div class="bottleneck-icon">💾</div>
-          <div class="bottleneck-name">Storage — 512GB SATA SSD</div>
-          <div class="bottleneck-util" style="color:var(--blue)">Not a bottleneck</div>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-label"><span>Load time comparison vs NVMe</span><span>+8–14s slower</span></div>
-          <div class="util-bar"><div class="util-fill" style="width:52%; background:var(--blue);"></div></div>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-label"><span>Drive health</span><span>Healthy (97%)</span></div>
-          <div class="util-bar"><div class="util-fill" style="width:97%; background:var(--green);"></div></div>
-        </div>
-        <div class="bottleneck-note">SATA SSD is not limiting in-game FPS. It does mean longer load times compared to NVMe — but this won't affect your frame rates once in-game. Drive is healthy, no action needed.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Software Recs -->
-  <div class="tab-panel" id="tab-software">
-    <p style="margin-bottom:1.5rem;">Based on your hardware and the issues we detected, these tools are likely to help. All are free and from reputable sources.</p>
-    <div class="sw-grid">
-      <div class="sw-card">
-        <div class="sw-card-top">
-          <div class="sw-icon sw-icon-blue">📊</div>
-          <div>
-            <div class="sw-name">MSI Afterburner</div>
-            <span class="sw-free">Free</span>
-          </div>
-        </div>
-        <div class="sw-why">Monitor GPU temps, clock speeds, and VRAM in real-time. Works with any GPU brand despite the name. Essential for diagnosing thermal issues.</div>
-        <div class="sw-trigger">Suggested because: GPU thermals unmonitored</div>
-      </div>
-      <div class="sw-card">
-        <div class="sw-card-top">
-          <div class="sw-icon sw-icon-amber">🌡️</div>
-          <div>
-            <div class="sw-name">HWiNFO64</div>
-            <span class="sw-free">Free</span>
-          </div>
-        </div>
-        <div class="sw-why">Detailed CPU, GPU, and system sensor data. Better for diagnosing thermal throttling than Task Manager. Shows actual throttle events.</div>
-        <div class="sw-trigger">Suggested because: CPU thermal throttling detected</div>
-      </div>
-      <div class="sw-card">
-        <div class="sw-card-top">
-          <div class="sw-icon sw-icon-green">💿</div>
-          <div>
-            <div class="sw-name">CrystalDiskInfo</div>
-            <span class="sw-free">Free</span>
-          </div>
-        </div>
-        <div class="sw-why">Checks drive SMART health data to catch early signs of drive degradation. Gives you advance warning before data loss.</div>
-        <div class="sw-trigger">Suggested because: SMART data not recently checked</div>
-      </div>
-      <div class="sw-card">
-        <div class="sw-card-top">
-          <div class="sw-icon sw-icon-cyan">🎮</div>
-          <div>
-            <div class="sw-name">NVIDIA App (Driver Update)</div>
-            <span class="sw-free">Free</span>
-          </div>
-        </div>
-        <div class="sw-why">Replaces GeForce Experience. Cleaner driver updates, no telemetry overhead, and manages per-game GPU profiles.</div>
-        <div class="sw-trigger">Suggested because: GPU driver 8 months out of date</div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<!-- BENCHMARK RESULTS DEMO -->
-<div class="full-width-bg" style="margin: 0; padding: 1px 0;">
-<section id="benchmark" class="fade-up">
-  <div class="section-label">Benchmark Results Demo</div>
-  <h2>What a benchmark result looks like.</h2>
-  <p style="max-width:540px; margin-bottom:2rem;">Here's what you'd see after running ScanMyPC's lightweight benchmark. Results show estimated FPS ranges based on your specific hardware, not generic presets.</p>
-
-  <div class="dash-card">
-    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
-      <div>
-        <div class="dash-label">Benchmark Run — March 2025</div>
-        <div style="font-family:var(--mono); font-size:0.8rem; color:var(--text-dim); margin-top:0.3rem;">i5-12400F · RTX 3060 12GB · 16GB DDR4 · 1920×1080</div>
-      </div>
-      <div style="text-align:right;">
-        <div style="font-family:var(--mono); font-size:0.7rem; color:var(--text-faint);">Duration: 4m 22s</div>
-        <div style="font-family:var(--mono); font-size:0.7rem; color:var(--text-faint);">Method: Synthetic + profiling data</div>
-      </div>
-    </div>
-    <table class="bench-table">
-      <thead>
-        <tr>
-          <th>Game</th>
-          <th>Preset Tested</th>
-          <th>Est. Avg FPS</th>
-          <th>1% Low FPS</th>
-          <th>Bottleneck</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Cyberpunk 2077</td>
-          <td class="mono-tag">High / DLSS Quality</td>
-          <td class="fps-val">61</td>
-          <td class="fps-val" style="color:var(--text-faint)">44</td>
-          <td style="font-family:var(--mono); font-size:0.75rem; color:var(--amber)">GPU</td>
-          <td><span class="rating-badge badge-ok">Playable</span></td>
-        </tr>
-        <tr>
-          <td>Elden Ring</td>
-          <td class="mono-tag">High / 60 FPS cap</td>
-          <td class="fps-val">60</td>
-          <td class="fps-val" style="color:var(--text-faint)">52</td>
-          <td style="font-family:var(--mono); font-size:0.75rem; color:var(--green)">CPU (minor)</td>
-          <td><span class="rating-badge badge-great">Good</span></td>
-        </tr>
-        <tr>
-          <td>Warzone</td>
-          <td class="mono-tag">Balanced</td>
-          <td class="fps-val">104</td>
-          <td class="fps-val" style="color:var(--text-faint)">81</td>
-          <td style="font-family:var(--mono); font-size:0.75rem; color:var(--green)">None</td>
-          <td><span class="rating-badge badge-great">Great</span></td>
-        </tr>
-        <tr>
-          <td>Forza Horizon 5</td>
-          <td class="mono-tag">Ultra</td>
-          <td class="fps-val">78</td>
-          <td class="fps-val" style="color:var(--text-faint)">61</td>
-          <td style="font-family:var(--mono); font-size:0.75rem; color:var(--green)">GPU</td>
-          <td><span class="rating-badge badge-great">Good</span></td>
-        </tr>
-        <tr>
-          <td>MS Flight Simulator 2024</td>
-          <td class="mono-tag">Medium</td>
-          <td class="fps-val">34</td>
-          <td class="fps-val" style="color:var(--text-faint)">21</td>
-          <td style="font-family:var(--mono); font-size:0.75rem; color:var(--red)">CPU (severe)</td>
-          <td><span class="rating-badge badge-poor">Struggling</span></td>
-        </tr>
-        <tr>
-          <td>Baldur's Gate 3</td>
-          <td class="mono-tag">Ultra</td>
-          <td class="fps-val">72</td>
-          <td class="fps-val" style="color:var(--text-faint)">55</td>
-          <td style="font-family:var(--mono); font-size:0.75rem; color:var(--green)">None</td>
-          <td><span class="rating-badge badge-great">Great</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="highlight-box" style="margin-top:1.2rem;">
-      <p>📌 <strong style="color:var(--text)">How these estimates are generated:</strong> Results use a combination of a lightweight synthetic workload and hardware profiling data from similar system configurations. They are estimates — not live captured game footage. Actual results may vary by ±15–20% depending on system state, background apps, and thermals.</p>
-    </div>
-  </div>
-
-  <!-- Mock Data Structures panel -->
-  <div style="margin-top:1.5rem;">
-    <div class="section-label">Data structures (for developers)</div>
-    <details style="background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:1rem 1.2rem;">
-      <summary style="cursor:pointer; font-family:var(--mono); font-size:0.8rem; color:var(--text-dim); user-select:none;">View mock JSON schemas</summary>
-      <pre style="margin-top:1rem; font-family:var(--mono); font-size:0.72rem; color:var(--text-dim); overflow-x:auto; line-height:1.6;">{
-  // Benchmark Result
-  "benchmarkResult": {
-    "runId": "br_20250315_a3f2",
-    "timestamp": "2025-03-15T14:22:00Z",
-    "systemProfile": {
-      "cpu": "Intel Core i5-12400F",
-      "gpu": "NVIDIA RTX 3060 12GB",
-      "ram_gb": 16,
-      "ram_channels": 1,
-      "resolution": "1920x1080",
-      "os": "Windows 11 23H2"
-    },
-    "gameResults": [
-      {
-        "gameId": "cyberpunk_2077",
-        "presetTested": "High_DLSS_Quality",
-        "estimatedAvgFps": 61,
-        "estimatedLowFps1pct": 44,
-        "primaryBottleneck": "GPU",
-        "bottleneckSeverity": "moderate",
-        "rating": "playable",
-        "confidence": 0.82,
-        "dataSource": "hardware_profile_match"
-      }
-    ]
-  },
-
-  // Game Optimization Recommendation
-  "gameOptimizationRec": {
-    "gameId": "cyberpunk_2077",
-    "gameName": "Cyberpunk 2077",
-    "targetHardwareClass": "RTX_3060_i5_12th",
-    "targetResolution": "1080p",
-    "settings": [
-      {
-        "category": "Graphics",
-        "setting": "Ray Tracing",
-        "recommended": "Off",
-        "currentDefault": "Medium",
-        "estimatedFpsGain": "+8-12",
-        "rationale": "Ray tracing significantly loads GPU; 3060 benefits more from rasterization at 1080p",
-        "confidence": 0.88
-      },
-      {
-        "category": "Graphics",
-        "setting": "DLSS",
-        "recommended": "Quality",
-        "currentDefault": "Off",
-        "estimatedFpsGain": "+15-22",
-        "rationale": "RTX 3060 DLSS support is strong; Quality mode is barely distinguishable from native at 1080p",
-        "confidence": 0.91
-      }
-    ],
-    "totalEstimatedGain": "+18-24 FPS",
-    "disclaimer": "These are best-fit recommendations based on similar hardware profiles. Actual gains may vary."
-  },
-
-  // Supported Game
-  "supportedGame": {
-    "gameId": "cyberpunk_2077",
-    "title": "Cyberpunk 2077",
-    "publisher": "CD Projekt Red",
-    "profileVersion": "2.12",
-    "lastUpdated": "2025-02-01",
-    "dlssSupported": true,
-    "fsr3Supported": true,
-    "rayTracingImpact": "high",
-    "cpuSensitivity": "moderate",
-    "vramRequirement_gb": 8,
-    "supportedResolutions": ["1080p","1440p","4K"],
-    "hardwareClassesProfiled": ["RTX_3060_i5_12th","RTX_3070_i7_12th","RX_6700XT_R7_5800X"]
-  },
-
-  // Software Recommendation
-  "softwareRec": {
-    "toolId": "msi_afterburner",
-    "name": "MSI Afterburner",
-    "category": "monitoring",
-    "cost": "free",
-    "downloadUrl": "https://www.msi.com/Landing/afterburner",
-    "triggerConditions": ["gpu_temp_unmonitored","gpu_throttle_suspected"],
-    "rationale": "Provides real-time GPU monitoring — helps confirm whether thermal throttling is causing frame drops",
-    "requiredForDiagnosis": false
-  },
-
-  // Bottleneck Analysis
-  "bottleneckAnalysis": {
-    "systemId": "sys_a3f2",
-    "primaryBottleneck": "CPU",
-    "components": [
-      {
-        "component": "CPU",
-        "model": "i5-12400F",
-        "avgGamingLoad_pct": 88,
-        "thermalHeadroom": "low",
-        "peakTemp_c": 91,
-        "throttleDetected": true,
-        "bottleneckRating": "primary",
-        "confidence": 0.87,
-        "evidence": ["cpu_util_above_85_sustained","temp_throttle_log","1pct_low_fps_variance_high"]
-      },
-      {
-        "component": "GPU",
-        "model": "RTX 3060 12GB",
-        "avgGamingLoad_pct": 71,
-        "vramUsage_pct": 77,
-        "bottleneckRating": "secondary",
-        "confidence": 0.79,
-        "evidence": ["gpu_util_nominal","vram_within_budget"]
-      }
-    ]
-  }
-}</pre>
-    </details>
-  </div>
-</section>
-</div>
-
-<!-- PRICING -->
-<section id="pricing" class="fade-up">
-  <div class="section-label">Pricing</div>
-  <h2>Simple, honest pricing.</h2>
-  <p style="margin-bottom:2.5rem; max-width:480px;">No dark patterns. No auto-renewing tricks. The free scan tells you what's wrong — Pro gives you the full picture and game optimization.</p>
-
-  <div class="pricing-grid">
-    <!-- Free -->
-    <div class="pricing-card">
-      <div class="plan-name">Free</div>
-      <div class="plan-price">$0</div>
-      <div class="plan-desc">One scan, no account required. See your main issues.</div>
-      <ul class="plan-features">
-        <li>PC health scan (90 seconds)</li>
-        <li>Top 3 issues with explanations</li>
-        <li>PC health score</li>
-        <li>Basic bottleneck summary</li>
-        <li>1 game recommendation (most played)</li>
-        <li class="no">Full bottleneck analysis</li>
-        <li class="no">Benchmark results</li>
-        <li class="no">All per-game settings</li>
-        <li class="no">Software recommendations</li>
-        <li class="no">Rescan / history</li>
-      </ul>
-      <button class="plan-btn plan-btn-ghost">Run Free Scan</button>
-    </div>
-    <!-- Pro -->
-    <div class="pricing-card featured">
-      <div class="featured-badge">Most Popular</div>
-      <div class="plan-name">Pro</div>
-      <div class="plan-price">$4.99 <span>/ month</span></div>
-      <div class="plan-desc">Full diagnostics, gaming optimization, and benchmarks.</div>
-      <ul class="plan-features">
-        <li>Everything in Free</li>
-        <li>Unlimited rescans</li>
-        <li>Full bottleneck analysis with evidence</li>
-        <li>Benchmark suite (all supported games)</li>
-        <li>Per-game settings for all 42 titles</li>
-        <li>Software recommendation engine</li>
-        <li>Gaming readiness score</li>
-        <li>Scan history & trend tracking</li>
-        <li>Next actions with effort estimates</li>
-        <li class="no">Remote diagnostic support</li>
-      </ul>
-      <button class="plan-btn plan-btn-primary">Start Pro — $4.99/mo</button>
-    </div>
-    <!-- Tech -->
-    <div class="pricing-card">
-      <div class="plan-name">Tech</div>
-      <div class="plan-price">$9.99 <span>/ month</span></div>
-      <div class="plan-desc">For IT support, PC enthusiasts, and helping family & friends.</div>
-      <ul class="plan-features">
-        <li>Everything in Pro</li>
-        <li>Scan up to 5 PCs</li>
-        <li>Full raw diagnostic export (JSON/CSV)</li>
-        <li>SMART drive data deep dive</li>
-        <li>Event log pattern analysis</li>
-        <li>Advanced thermal history charts</li>
-        <li>Shareable scan report links</li>
-        <li>Priority email support</li>
-      </ul>
-      <button class="plan-btn plan-btn-ghost">Start Tech Plan</button>
-    </div>
-  </div>
-
-  <!-- Comparison Table -->
-  <h3 style="margin-top:3rem; margin-bottom:0.5rem; font-family:var(--display); font-size:1.3rem; font-weight:800;">Full feature comparison</h3>
-  <table class="comp-table">
-    <thead>
-      <tr>
-        <th>Feature</th>
-        <th>Free</th>
-        <th>Pro</th>
-        <th>Tech</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="section-row"><td colspan="4">Diagnostics</td></tr>
-      <tr><td>PC health scan</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Top 3 issues with explanations</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Full issue list (all findings)</td><td><span class="dash">–</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Confidence levels & evidence</td><td>Partial</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Unlimited rescans</td><td><span class="dash">–</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Scan history & trend tracking</td><td><span class="dash">–</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>SMART drive deep dive</td><td><span class="dash">–</span></td><td><span class="dash">–</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Event log pattern analysis</td><td><span class="dash">–</span></td><td><span class="dash">–</span></td><td><span class="check">✓</span></td></tr>
-
-      <tr class="section-row"><td colspan="4">Gaming Optimization</td></tr>
-      <tr><td>Gaming readiness score</td><td><span class="dash">–</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Bottleneck analysis</td><td>Summary only</td><td>Full</td><td>Full + raw</td></tr>
-      <tr><td>Per-game settings (# titles)</td><td>1 game</td><td>42 titles</td><td>42 titles</td></tr>
-      <tr><td>Benchmark suite</td><td><span class="dash">–</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Software recommendations</td><td><span class="dash">–</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-
-      <tr class="section-row"><td colspan="4">Sharing & Export</td></tr>
-      <tr><td>Shareable scan report link</td><td><span class="dash">–</span></td><td><span class="dash">–</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>JSON/CSV diagnostic export</td><td><span class="dash">–</span></td><td><span class="dash">–</span></td><td><span class="check">✓</span></td></tr>
-      <tr><td>Multi-PC support</td><td>1</td><td>1</td><td>Up to 5</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- FAQ -->
-<div class="full-width-bg" style="margin:0; padding: 1px 0;">
-<section id="faq" class="fade-up">
-  <div class="section-label">FAQ</div>
-  <h2>Common questions.</h2>
-  <p style="margin-bottom:2rem; max-width:520px;">Especially about what we support — and what we don't.</p>
-
-  <div class="faq-list">
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Which games are supported for optimization recommendations?
-        <span class="faq-chevron">▼</span>
-      </div>
-      <div class="faq-a">
-        <div class="faq-a-inner">
-          We currently support 42 titles including Cyberpunk 2077, Elden Ring, Call of Duty: Warzone, Forza Horizon 5, Baldur's Gate 3, Microsoft Flight Simulator 2024, Valorant, Apex Legends, Fortnite, and more. The full list is available in the app. We add new games regularly based on user requests and when we have enough hardware profile data to give useful, confident recommendations — not guesses.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Why can't you support every game?
-        <span class="faq-chevron">▼</span>
-      </div>
-      <div class="faq-a">
-        <div class="faq-a-inner">
-          Our game recommendations are based on profiling data from real hardware configurations — not guesswork. To give a confident recommendation for a specific game on a specific GPU class, we need enough data points to trust the numbers. For obscure titles or very new releases, we'd be making things up, which we won't do. If your game isn't supported yet, you can request it in the app and we'll let you know when it's ready.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Will ScanMyPC automatically fix issues or change my settings?
-        <span class="faq-chevron">▼</span>
-      </div>
-      <div class="faq-a">
-        <div class="faq-a-inner">
-          No. ScanMyPC diagnoses and recommends — it does not automatically make changes. We believe you should understand what's being changed and why before anything happens to your PC. Recommendations are displayed with explanations and confidence levels, and you choose what to act on. We do not write to your registry, modify game files, or apply "tweaks" automatically.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        How accurate are the FPS estimates?
-        <span class="faq-chevron">▼</span>
-      </div>
-      <div class="faq-a">
-        <div class="faq-a-inner">
-          Estimates are based on hardware profiling data from similar system configurations. We show ranges rather than single numbers specifically because real-world performance varies. Expect ±15–20% variance depending on your exact thermal state, background processes, driver version, and in-game scene. We clearly label these as estimates, not guarantees — that's intentional.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        What data does ScanMyPC collect from my PC?
-        <span class="faq-chevron">▼</span>
-      </div>
-      <div class="faq-a">
-        <div class="faq-a-inner">
-          ScanMyPC reads hardware information (CPU, GPU, RAM, storage), Windows system logs (event viewer errors, driver issues), thermal sensor data, and which games are installed via standard Windows APIs. It does not access your personal files, browsing history, or any content. You can review the full data manifest in the app before running a scan. Anonymized hardware profile data may be used to improve benchmark estimates, and you can opt out of this.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        My game runs fine — is there still a point in running ScanMyPC?
-        <span class="faq-chevron">▼</span>
-      </div>
-      <div class="faq-a">
-        <div class="faq-a-inner">
-          Possibly, for a few reasons: thermal issues often build up silently before causing problems. A health scan might catch a drive showing early SMART warning signs, or RAM running in the wrong configuration, or a driver conflict you haven't noticed yet. The benchmark is also useful just to understand how your hardware stacks up against the games you want to play in the future. But if everything feels great, the free scan is a good "all clear" checkup and you may not need Pro.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Can ScanMyPC tell me if I should upgrade my hardware?
-        <span class="faq-chevron">▼</span>
-      </div>
-      <div class="faq-a">
-        <div class="faq-a-inner">
-          Sort of. The bottleneck analysis will tell you which component is the likely limiting factor and how much headroom it has. But we deliberately don't push upgrade recommendations — in most cases, there are free or low-cost fixes (drivers, thermal paste, RAM slot configuration, in-game settings) that are worth trying first. If you're genuinely hitting the ceiling of your hardware for a specific game, we'll say so clearly, including what the realistic next-tier upgrade would look like.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Does this work on laptops?
-        <span class="faq-chevron">▼</span>
-      </div>
-      <div class="faq-a">
-        <div class="faq-a-inner">
-          Yes, with caveats. Laptop diagnostics are supported, but power management and thermal behavior is more complex on laptops than desktops. Some recommendations (like moving RAM to dual-channel) won't apply to soldered memory. The scan will note when a recommendation isn't relevant to your specific machine type. Benchmark estimates are also wider for laptops due to higher variance in thermal performance.
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-</div>
-
-<!-- FOOTER -->
 <footer>
-  <div>
-    <div class="footer-logo">ScanMyPC</div>
-    <div class="footer-note" style="margin-top:0.5rem;">Windows PC diagnostics &amp; gaming optimization</div>
-  </div>
-  <div class="footer-note" style="text-align:right; line-height:2;">
-    <span style="display:block;">No bloatware · No fake fixes · No upsell pressure</span>
-    <span>© 2025 ScanMyPC · Privacy Policy · Terms</span>
-  </div>
+  <div class="footer-logo">PC<span>Labs</span></div>
+  <div class="footer-note">No bloatware · No fake fixes · No upsell pressure · © 2025 PCLabs</div>
 </footer>
 
-<script>
-  // Tabs
-  function switchTab(e, id) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    e.target.classList.add('active');
-    document.getElementById('tab-' + id).classList.add('active');
-  }
-
-  // FAQ
-  function toggleFaq(el) {
-    const item = el.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-  }
-
-  // Scroll fade-in
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-</script>
 </body>
 </html>
