@@ -660,7 +660,7 @@
         </button>
         <div class="accordion-body" id="s1">
           <div class="accordion-body-inner">
-            <strong>Yes, PCLabs is completely safe.</strong> It's a read-only diagnostics tool — it never modifies system files, installs background services, or changes your Windows registry without explicit consent. The executable is code-signed, so Windows SmartScreen can verify its authenticity. If your antivirus flags it, that's a false positive common with unsigned or newly released diagnostics software; you can submit the binary to your AV vendor for whitelisting.
+            <strong>Yes, PCLabs is safe.</strong> It's a read-only diagnostics tool — it never modifies system files, installs background services, or touches your Windows registry. If Windows SmartScreen warns you on install, that's normal for newly released apps that haven't built up a reputation score yet. Click "More info" then "Run anyway." If your antivirus flags it, it's a false positive — this is common with diagnostics software that reads low-level hardware data.
           </div>
         </div>
       </div>
@@ -674,7 +674,7 @@
         </button>
         <div class="accordion-body" id="s2">
           <div class="accordion-body-inner">
-            <strong>PCLabs collects nothing by default.</strong> All hardware and software data is read locally and displayed only on your screen — nothing is transmitted to any server. There are no analytics, no telemetry, and no account required. If a future version includes optional crash reporting, it will be opt-in and clearly disclosed. Your PC's information stays on your PC.
+            <strong>PCLabs collects nothing.</strong> All data is read locally and shown only on your screen — nothing is transmitted anywhere. No analytics, no telemetry, no account. Your PC's information stays on your PC.
           </div>
         </div>
       </div>
@@ -719,7 +719,7 @@
         </button>
         <div class="accordion-body" id="h1">
           <div class="accordion-body-inner">
-            No. PCLabs is designed to be a <strong>lightweight, one-shot tool</strong> — it performs its scans quickly and exits. It does not run in the background, does not install system services, and does not hook into your OS at startup. CPU usage during a scan is minimal (under 2% on most machines) and lasts only a few seconds per check.
+            No. PCLabs runs once, shows you results, and that's it. It doesn't run in the background, doesn't install any services, and doesn't start with Windows. Once the scan is done, it's just sitting there until you close it.
           </div>
         </div>
       </div>
@@ -779,7 +779,7 @@
         </button>
         <div class="accordion-body" id="c1">
           <div class="accordion-body-inner">
-            CPU-Z and HWiNFO are excellent tools for <strong>raw hardware data</strong> — they show you numbers. PCLabs focuses on <strong>interpretation and context</strong>. Instead of presenting you with 200 sensor readings to decode yourself, PCLabs analyzes your system holistically — checking whether your thermals are actually within safe limits for your specific CPU, whether your RAM is running at its rated speed, whether your GPU is throttling — and surfaces only what matters, in plain English. It's built for people who want answers, not dashboards.
+            CPU-Z and HWiNFO are great if you want raw numbers and know what to do with them. PCLabs is for when you just want to know if something's wrong. Instead of a wall of sensor readings, you get a health score, a list of actual findings, and plain-English explanations of what each one means and what to do about it.
           </div>
         </div>
       </div>
@@ -907,7 +907,7 @@
 <section class="cta">
   <div class="cta-inner">
     <h2>Ready to check your PC?</h2>
-    <p>Free, private, and takes less than a minute to run. No install required.</p>
+    <p>Free, private, and nothing is changed on your system.</p>
     <a href="/download" class="btn-primary">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M8 2v9M4.5 7.5L8 11l3.5-3.5"/>

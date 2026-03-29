@@ -12,12 +12,12 @@
     gtag('js', new Date());
     gtag('config', 'G-KPVC24PLC5');
   </script>
-  <meta name="description" content="PCLabs checks your CPU temps, RAM speed, disk health, GPU drivers, and Windows health — then tells you exactly what's wrong. Free, private, no install required." />
+  <meta name="description" content="PCLabs checks your CPU temps, RAM speed, disk health, GPU drivers, and Windows health — then tells you exactly what's wrong. Free, private, open source." />
   <link rel="icon" href="/images/pclabs-logo.png" type="image/png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="PCLabs" />
   <meta property="og:title" content="PCLabs — Free Windows PC Diagnostics" />
-  <meta property="og:description" content="PCLabs checks your CPU temps, RAM speed, disk health, GPU drivers, and Windows health — then tells you exactly what's wrong. Free, private, no install required." />
+  <meta property="og:description" content="PCLabs checks your CPU temps, RAM speed, disk health, GPU drivers, and Windows health — then tells you exactly what's wrong. Free, private, open source." />
   <meta property="og:url" content="https://www.thepclabs.com" />
   <meta property="og:image" content="https://www.thepclabs.com/images/pclabs-logo.png" />
   <meta name="twitter:card" content="summary" />
@@ -523,6 +523,52 @@
       line-height: 1.55;
     }
 
+    /* ── TRANSPARENCY SECTION ── */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+      margin-bottom: 32px;
+    }
+    .trust-grid .trust-item {
+      flex-direction: column;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      font-size: inherit;
+      font-weight: inherit;
+      color: inherit;
+      white-space: normal;
+      gap: 0;
+    }
+    .trust-grid .trust-item svg { display: none; }
+    .trust-label {
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .trust-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .trust-footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    @media (max-width: 640px) {
+      .trust-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── CTA SECTION ── */
     .cta-section {
       text-align: center;
@@ -997,7 +1043,7 @@
       <div class="step">
         <div class="step-num">Step 02</div>
         <div class="step-title">Run a diagnostic scan</div>
-        <div class="step-desc">Click "Run Diagnostic Scan." PCLabs queries your hardware using Windows APIs — thermals, RAM, storage, drivers, and more. Takes 30–90 seconds. Nothing is changed on your PC.</div>
+        <div class="step-desc">Click "Run Diagnostic Scan." PCLabs queries your hardware using Windows APIs — thermals, RAM, storage, drivers, and more. Nothing is changed on your PC.</div>
       </div>
       <div class="step">
         <div class="step-num">Step 03</div>
@@ -1101,6 +1147,32 @@
     </div>
   </div>
   <p class="checks-disclaimer">Results depend on what your hardware and Windows expose via standard system APIs. Most systems are fully supported. Some checks like CPU temperature may not be available on all hardware configurations.</p>
+</section>
+
+<!-- TRANSPARENCY -->
+<section class="section">
+  <div class="section-eyebrow">How it actually scans</div>
+  <h2 class="section-title">No black boxes. No guesswork.</h2>
+  <p class="section-sub">PCLabs uses the same Windows APIs that IT professionals use every day. Here's exactly what runs under the hood.</p>
+  <div class="trust-grid">
+    <div class="trust-item">
+      <div class="trust-label">WMI / CIM</div>
+      <div class="trust-desc">Reads your hardware profile — CPU, GPU, RAM speed and capacity, storage info, motherboard, and BIOS version. Standard Windows interface, read-only.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-label">S.M.A.R.T.</div>
+      <div class="trust-desc">Queries your drive's built-in health reporting system. The same data your drive manufacturer uses to flag early failure warnings.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-label">Windows Event Log</div>
+      <div class="trust-desc">Reads crash and stability history — BSODs, unexpected shutdowns, application crashes. Your system already logs all of this. PCLabs just surfaces it.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-label">Registry reads</div>
+      <div class="trust-desc">Checks startup entries and power plan configuration. Read-only — nothing is written, nothing is changed.</div>
+    </div>
+  </div>
+  <p class="trust-footer">Everything runs locally on your machine. Nothing is sent anywhere. You can verify this yourself — the code is open source.</p>
 </section>
 
 <!-- CTA -->
