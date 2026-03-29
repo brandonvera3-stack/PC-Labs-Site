@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — PCLabs</title>
+  <meta name="description" content="Got questions about PCLabs? Find answers about how it works, what it checks, privacy, and system requirements." />
+  <link rel="icon" href="/images/pclabs-logo.png" type="image/png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PCLabs" />
+  <meta property="og:title" content="FAQ — PCLabs" />
+  <meta property="og:description" content="Got questions about PCLabs? Find answers about how it works, what it checks, privacy, and system requirements." />
+  <meta property="og:url" content="https://www.thepclabs.com/faq.html" />
+  <meta property="og:image" content="https://www.thepclabs.com/images/pclabs-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KPVC24PLC5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KPVC24PLC5');
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f;
+      --bg-card: #13131a;
+      --bg-hover: #1a1a24;
+      --accent: #4f8ef7;
+      --accent-dim: rgba(79, 142, 247, 0.15);
+      --text: #e8e8f0;
+      --text-muted: #7a7a9a;
+      --border: rgba(255, 255, 255, 0.07);
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 13, 15, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.3px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg { display: block; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--bg-hover);
+    }
+
+    .nav-links a.active { color: var(--accent); }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text-muted);
+    }
+
+    .nav-social-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+      padding: 0 4px;
+    }
+
+    .nav-links .nav-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .nav-links .nav-social-icon:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(79, 142, 247, 0.08);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 96px 24px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(79, 142, 247, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(79, 142, 247, 0.3);
+      padding: 4px 14px;
+      border-radius: 99px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ── FAQ CONTENT ── */
+    .faq-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+
+    .faq-category {
+      margin-bottom: 56px;
+    }
+
+    .category-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .category-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(79, 142, 247, 0.25);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .category-label h2 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .accordion {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accordion-item:last-child { border-bottom: none; }
+
+    .accordion-trigger {
+      width: 100%;
+      background: var(--bg-card);
+      border: none;
+      cursor: pointer;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-align: left;
+      transition: background 0.15s;
+    }
+
+    .accordion-trigger:hover { background: var(--bg-hover); }
+
+    .accordion-trigger.open { background: var(--bg-hover); }
+
+    .accordion-question {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .chevron {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s;
+    }
+
+    .accordion-trigger.open .chevron {
+      transform: rotate(180deg);
+      color: var(--accent);
+    }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      background: var(--bg-card);
+    }
+
+    .accordion-body-inner {
+      padding: 0 24px 22px;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .accordion-body-inner strong { color: var(--text); font-weight: 600; }
+
+    .accordion-body-inner a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .accordion-body-inner a:hover { text-decoration: underline; }
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(79, 142, 247, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner { max-width: 520px; margin: 0 auto; position: relative; }
+
+    .cta h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .cta p {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 32px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 24px rgba(79, 142, 247, 0.35);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(79, 142, 247, 0.45);
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    .cta-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-social {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .footer-social a:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(79, 142, 247, 0.08);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; flex-direction: column; }
+      .nav-links.open {
+        display: flex;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 16px 16px;
+        gap: 2px;
+      }
+      .nav-links.open a { padding: 10px 14px; }
+      .nav-links.open .nav-social-icon { padding: 0; }
+      .nav-links.open .nav-social-item { padding: 6px 14px; }
+      .hamburger { display: flex; }
+      .hero { padding: 64px 20px 48px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .accordion-trigger { padding: 16px 18px; }
+      .accordion-body-inner { padding: 0 18px 18px; }
+    }
+
+    /* ── BACKGROUND CANVAS ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(91, 170, 220, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91, 170, 220, 0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .bg-ekg-wrap {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 60px;
+      overflow: hidden;
+    }
+    .bg-ekg-svg {
+      width: 200%;
+      height: 60px;
+      display: block;
+      opacity: 0.13;
+      animation: bg-ekg-scroll 10s linear infinite;
+      will-change: transform;
+    }
+    @keyframes bg-ekg-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .bg-particles { position: absolute; inset: 0; }
+    .bg-particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #5BAADC;
+      box-shadow: 0 0 6px 2px rgba(91, 170, 220, 0.4);
+      opacity: 0;
+      animation: bg-particle-float 14s ease-in-out infinite;
+    }
+    .bg-particle:nth-child(1)  { left:  8%; top: 20%; animation-delay:    0s; animation-duration: 14s; }
+    .bg-particle:nth-child(2)  { left: 22%; top: 60%; animation-delay:   -4s; animation-duration: 11s; }
+    .bg-particle:nth-child(3)  { left: 40%; top: 35%; animation-delay:   -8s; animation-duration: 16s; }
+    .bg-particle:nth-child(4)  { left: 60%; top: 75%; animation-delay:   -2s; animation-duration: 12s; }
+    .bg-particle:nth-child(5)  { left: 75%; top: 18%; animation-delay:  -10s; animation-duration: 13s; }
+    .bg-particle:nth-child(6)  { left: 88%; top: 50%; animation-delay:   -6s; animation-duration: 15s; }
+    .bg-particle:nth-child(7)  { left: 14%; top: 82%; animation-delay:  -12s; animation-duration: 10s; }
+    .bg-particle:nth-child(8)  { left: 52%; top: 88%; animation-delay:   -3s; animation-duration: 17s; }
+    .bg-particle:nth-child(9)  { left: 33%; top: 10%; animation-delay:   -7s; animation-duration: 13s; }
+    .bg-particle:nth-child(10) { left: 68%; top: 92%; animation-delay:   -1s; animation-duration: 18s; }
+    @keyframes bg-particle-float {
+      0%   { opacity: 0;    transform: translateY(0)     scale(1);   }
+      15%  { opacity: 0.14; }
+      50%  { opacity: 0.18; transform: translateY(-50px) scale(1.3); }
+      85%  { opacity: 0.14; }
+      100% { opacity: 0;    transform: translateY(-100px) scale(0.7); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bg-ekg-svg, .bg-particle { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="bg-canvas" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-ekg-wrap">
+    <svg class="bg-ekg-svg" viewBox="0 0 2000 60" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 0,30 L 35,30 L 42,27 L 48,30 L 59,30 L 63,34 L 68,1 L 73,52 L 79,30 L 86,24 L 97,30 L 200,30 L 235,30 L 242,27 L 248,30 L 259,30 L 263,34 L 268,1 L 273,52 L 279,30 L 286,24 L 297,30 L 400,30 L 435,30 L 442,27 L 448,30 L 459,30 L 463,34 L 468,1 L 473,52 L 479,30 L 486,24 L 497,30 L 600,30 L 635,30 L 642,27 L 648,30 L 659,30 L 663,34 L 668,1 L 673,52 L 679,30 L 686,24 L 697,30 L 800,30 L 835,30 L 842,27 L 848,30 L 859,30 L 863,34 L 868,1 L 873,52 L 879,30 L 886,24 L 897,30 L 1000,30 L 1035,30 L 1042,27 L 1048,30 L 1059,30 L 1063,34 L 1068,1 L 1073,52 L 1079,30 L 1086,24 L 1097,30 L 1200,30 L 1235,30 L 1242,27 L 1248,30 L 1259,30 L 1263,34 L 1268,1 L 1273,52 L 1279,30 L 1286,24 L 1297,30 L 1400,30 L 1435,30 L 1442,27 L 1448,30 L 1459,30 L 1463,34 L 1468,1 L 1473,52 L 1479,30 L 1486,24 L 1497,30 L 1600,30 L 1635,30 L 1642,27 L 1648,30 L 1659,30 L 1663,34 L 1668,1 L 1673,52 L 1679,30 L 1686,24 L 1697,30 L 1800,30 L 1835,30 L 1842,27 L 1848,30 L 1859,30 L 1863,34 L 1868,1 L 1873,52 L 1879,30 L 1886,24 L 1897,30 L 2000,30"
+            stroke="#5BAADC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="bg-particles">
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <img src="/images/pclabs-logo.png" alt="PCLabs" style="height:64px;width:auto;display:block;" />
+    </a>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="19" y2="6"/>
+        <line x1="3" y1="11" x2="19" y2="11"/>
+        <line x1="3" y1="16" x2="19" y2="16"/>
+      </svg>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/faq.html" class="active">FAQ</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+      <li class="nav-social-item">
+        <a href="https://www.tiktok.com/@pclabsapp" target="_blank" rel="noopener" aria-label="TikTok" class="nav-social-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.27 8.27 0 004.83 1.53V6.82a4.85 4.85 0 01-1.06-.13z"/>
+          </svg>
+        </a>
+        <a href="https://www.youtube.com/@pclabsapp" target="_blank" rel="noopener" aria-label="YouTube" class="nav-social-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+        <a href="https://discord.gg/PHFuDyF72P" target="_blank" rel="noopener" aria-label="Discord" class="nav-social-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.032.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+          </svg>
+        </a>
+      </li>
+      <li><a href="/download">Download</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Help Center</div>
+  <h1>Frequently Asked Questions</h1>
+  <p>Everything you need to know about PCLabs — from how it works to what it never touches.</p>
+</section>
+
+<!-- FAQ -->
+<main class="faq-content">
+
+  <!-- Category 1: Safety & Privacy -->
+  <div class="faq-category">
+    <div class="category-label">
+      <div class="category-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 1.5L2.25 4.5v4.25C2.25 12.5 5.1 15.9 9 17c3.9-1.1 6.75-4.5 6.75-8.25V4.5L9 1.5z"/>
+        </svg>
+      </div>
+      <h2>Safety &amp; Privacy</h2>
+    </div>
+
+    <div class="accordion" id="cat-safety">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="s1" aria-expanded="false">
+          <span class="accordion-question">Is PCLabs safe to use? Is it malware?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="s1">
+          <div class="accordion-body-inner">
+            <strong>Yes, PCLabs is completely safe.</strong> It's a read-only diagnostics tool — it never modifies system files, installs background services, or changes your Windows registry without explicit consent. The executable is code-signed, so Windows SmartScreen can verify its authenticity. If your antivirus flags it, that's a false positive common with unsigned or newly released diagnostics software; you can submit the binary to your AV vendor for whitelisting.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="s2" aria-expanded="false">
+          <span class="accordion-question">What data does PCLabs collect? Where does it go?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="s2">
+          <div class="accordion-body-inner">
+            <strong>PCLabs collects nothing by default.</strong> All hardware and software data is read locally and displayed only on your screen — nothing is transmitted to any server. There are no analytics, no telemetry, and no account required. If a future version includes optional crash reporting, it will be opt-in and clearly disclosed. Your PC's information stays on your PC.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="s3" aria-expanded="false">
+          <span class="accordion-question">Do I need admin rights to run PCLabs?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="s3">
+          <div class="accordion-body-inner">
+            Most diagnostics run fine without elevated privileges. However, <strong>some hardware sensors — such as CPU voltage, fan RPM readings, and certain S.M.A.R.T. drive details — require administrator access</strong> to query via Windows APIs (WMI/IOCTL). PCLabs will prompt for elevation only when needed and will gracefully skip checks it can't access rather than crashing.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Category 2: How It Works -->
+  <div class="faq-category">
+    <div class="category-label">
+      <div class="category-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="9" r="7.25"/>
+          <polyline points="9 5.5 9 9 11.5 11"/>
+        </svg>
+      </div>
+      <h2>How It Works</h2>
+    </div>
+
+    <div class="accordion" id="cat-howit">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="h1" aria-expanded="false">
+          <span class="accordion-question">Will PCLabs slow down my PC while running?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="h1">
+          <div class="accordion-body-inner">
+            No. PCLabs is designed to be a <strong>lightweight, one-shot tool</strong> — it performs its scans quickly and exits. It does not run in the background, does not install system services, and does not hook into your OS at startup. CPU usage during a scan is minimal (under 2% on most machines) and lasts only a few seconds per check.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="h2" aria-expanded="false">
+          <span class="accordion-question">Can PCLabs fix problems automatically, or does it just report them?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="h2">
+          <div class="accordion-body-inner">
+            The diagnostic scanner is <strong>read-only</strong> — it identifies issues and explains them in plain language without touching your system. Pro users also get the Game Optimizer, which applies Windows-level settings changes (power plan, HAGS, visual effects, etc.) only when you explicitly click Apply. Every optimization is reversible and documented. Your game files, saves, and registry beyond those specific settings are never touched.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="h3" aria-expanded="false">
+          <span class="accordion-question">How often should I run a scan?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="h3">
+          <div class="accordion-body-inner">
+            For most users, <strong>once a month is plenty</strong> — or any time your PC starts behaving strangely (slowdowns, crashes, unexpected throttling, high temps). There's no harm in running it more often, especially after a Windows update, a driver change, or after pushing your hardware with games or creative workloads. Think of it like a quick health check.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Category 3: Compared to Other Tools -->
+  <div class="faq-category">
+    <div class="category-label">
+      <div class="category-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="2" y1="9" x2="16" y2="9"/>
+          <line x1="9" y1="2" x2="9" y2="16"/>
+          <circle cx="9" cy="9" r="3"/>
+        </svg>
+      </div>
+      <h2>Compared to Other Tools</h2>
+    </div>
+
+    <div class="accordion" id="cat-compare">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="c1" aria-expanded="false">
+          <span class="accordion-question">How is PCLabs different from CPU-Z or HWiNFO?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="c1">
+          <div class="accordion-body-inner">
+            CPU-Z and HWiNFO are excellent tools for <strong>raw hardware data</strong> — they show you numbers. PCLabs focuses on <strong>interpretation and context</strong>. Instead of presenting you with 200 sensor readings to decode yourself, PCLabs analyzes your system holistically — checking whether your thermals are actually within safe limits for your specific CPU, whether your RAM is running at its rated speed, whether your GPU is throttling — and surfaces only what matters, in plain English. It's built for people who want answers, not dashboards.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="c2" aria-expanded="false">
+          <span class="accordion-question">Is PCLabs actually free?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="c2">
+          <div class="accordion-body-inner">
+            PCLabs has a free tier with full diagnostic scanning. <strong>PCLabs Pro is available for a one-time purchase of $4.99</strong> and unlocks Junk Cleaner, Game Optimizer, Game Detection, Game Profiles, and export reports. Price increases as new features are added. <a href="/pricing.html">See the pricing page for full details.</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="c3" aria-expanded="false">
+          <span class="accordion-question">Is there a Mac version?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="c3">
+          <div class="accordion-body-inner">
+            Not currently. PCLabs is <strong>Windows-only</strong> for now, built specifically around Windows APIs (WMI, DirectX diagnostics, Windows Update history, etc.) that don't have direct macOS equivalents. A Mac version would be a significant separate project. It's not planned for the near future, but it's not off the table either — if there's enough interest, it'll happen eventually.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Category 4: Pro Features & v0.2.0 -->
+  <div class="faq-category">
+    <div class="category-label">
+      <div class="category-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="9 2 11.2 6.6 16.3 7.3 12.65 10.85 13.55 15.95 9 13.6 4.45 15.95 5.35 10.85 1.7 7.3 6.8 6.6"/>
+        </svg>
+      </div>
+      <h2>Pro Features &amp; v0.2.0</h2>
+    </div>
+
+    <div class="accordion" id="cat-pro">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="p1" aria-expanded="false">
+          <span class="accordion-question">What's new in v0.2.0?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="p1">
+          <div class="accordion-body-inner">
+            v0.2.0 ships four new Pro features: <strong>Junk Cleaner</strong> — scans 9 categories of junk files (temp files, Windows temp, update cache, crash dumps, thumbnail cache, recycle bin, and Chrome, Edge, and Firefox caches), shows you how much space each category uses, and only removes what you select. <strong>Game Optimizer</strong> — applies six Windows-level gaming optimizations (disable Xbox Game Bar, enable Hardware-Accelerated GPU Scheduling, set High Performance power plan, disable fullscreen optimizations, reduce visual effects, disable Nagle algorithm). Applied changes persist across restarts and are tracked in the app. <strong>Game Detection</strong> — automatically finds installed games across 10 launchers. <strong>Game Profiles</strong> — per-game performance setting recommendations for 22 popular titles.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="p2" aria-expanded="false">
+          <span class="accordion-question">Which game launchers does PCLabs detect?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="p2">
+          <div class="accordion-body-inner">
+            PCLabs detects games from: <strong>Steam</strong>, <strong>Epic Games</strong>, <strong>Xbox / Game Pass</strong>, <strong>Battle.net</strong>, <strong>EA App</strong>, <strong>Ubisoft Connect</strong>, <strong>GOG Galaxy</strong>, <strong>Riot Games</strong>, <strong>Rockstar Launcher</strong>, and <strong>Minecraft</strong>. Detection is automatic — PCLabs reads standard install paths and registry entries. No launcher login required.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="p3" aria-expanded="false">
+          <span class="accordion-question">Which games have performance tips?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="p3">
+          <div class="accordion-body-inner">
+            v0.2.0 includes per-game tips for 22 titles: <strong>Fortnite, Apex Legends, Warzone, Call of Duty: Black Ops 6, Counter-Strike 2, Valorant, ARC Raiders, Marvel Rivals, Battlefield 2042, Battlefield V, Overwatch 2, Rainbow Six Siege, Escape from Tarkov, THE FINALS, Hunt: Showdown 1896, Splitgate, Destiny 2, PUBG: Battlegrounds, Rust, Halo Infinite, Liar's Bar, Schedule I,</strong> and <strong>R.E.P.O.</strong> Each profile includes specific settings recommendations with explanations of why they matter competitively.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="p4" aria-expanded="false">
+          <span class="accordion-question">Does the Game Optimizer change my game files?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="p4">
+          <div class="accordion-body-inner">
+            <strong>No.</strong> The Game Optimizer only adjusts Windows system settings — things like your power plan, GPU scheduling mode, and network adapter configuration. Your game files, save data, and in-game settings are never touched. All changes are applied at the Windows level and are fully reversible by toggling the same settings back in Windows manually.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" data-target="p5" aria-expanded="false">
+          <span class="accordion-question">Is the Junk Cleaner safe?</span>
+          <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5 8 10 13 15 8"/>
+          </svg>
+        </button>
+        <div class="accordion-body" id="p5">
+          <div class="accordion-body-inner">
+            <strong>Yes.</strong> The Junk Cleaner only targets files that Windows itself marks as temporary or safe to remove — temp folders, update caches, crash dumps, browser caches, and the recycle bin. It shows you exactly what it found, the size of each category, and waits for you to select what to clean before removing anything. Nothing is deleted automatically. Your documents, photos, game saves, and application data are never in scope.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Ready to check your PC?</h2>
+    <p>Free, private, and takes less than a minute to run. No install required.</p>
+    <a href="/download" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 2v9M4.5 7.5L8 11l3.5-3.5"/>
+        <path d="M2 13h12"/>
+      </svg>
+      Download PCLabs
+    </a>
+    <p class="cta-note">Windows 10 &amp; 11 &nbsp;·&nbsp; Free &nbsp;·&nbsp; No account needed</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">
+      <img src="/images/pclabs-logo.png" alt="PCLabs" style="height:64px;width:auto;display:block;" />
+    </a>
+    <ul class="footer-links">
+      <li><a href="/download">Download</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+    </ul>
+    <span class="footer-copy">&copy; 2026 PCLabs. Built for Windows users who want real answers.</span>
+    <div class="footer-social">
+    <a href="https://www.tiktok.com/@pclabsapp" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.27 8.27 0 004.83 1.53V6.82a4.85 4.85 0 01-1.06-.13z"/>
+      </svg>
+    </a>
+    <a href="https://www.youtube.com/@pclabsapp" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+    </a>
+    <a href="https://discord.gg/PHFuDyF72P" target="_blank" rel="noopener" aria-label="Discord">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.032.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+      </svg>
+    </a>
+  </div>
+  </div>
+</footer>
+
+<script>
+  // Accordion
+  document.querySelectorAll('.accordion-trigger').forEach(function(trigger) {
+    trigger.addEventListener('click', function() {
+      var targetId = this.getAttribute('data-target');
+      var body = document.getElementById(targetId);
+      var isOpen = this.classList.contains('open');
+
+      // Close all items in the same accordion
+      var parentAccordion = this.closest('.accordion');
+      parentAccordion.querySelectorAll('.accordion-trigger').forEach(function(t) {
+        t.classList.remove('open');
+        t.setAttribute('aria-expanded', 'false');
+      });
+      parentAccordion.querySelectorAll('.accordion-body').forEach(function(b) {
+        b.style.maxHeight = '0';
+      });
+
+      // Open this one if it was closed
+      if (!isOpen) {
+        this.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // Mobile nav hamburger
+  var hamburger = document.getElementById('hamburger');
+  var navLinks = document.getElementById('nav-links');
+  hamburger.addEventListener('click', function() {
+    navLinks.classList.toggle('open');
+  });
+
+  // Close mobile nav on link click
+  navLinks.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      navLinks.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>

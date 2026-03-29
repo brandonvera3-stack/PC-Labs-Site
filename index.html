@@ -1,359 +1,1143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PCLabs — PC Diagnostics & Gaming Optimization</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<!-- Plausible Analytics -->
-<script defer data-domain="thepclabs.com" src="https://plausible.io/js/script.js"></script>
-<style>
-  :root {
-    --bg:#080b10;--surface:#0e1219;--card:#121720;--border:#1c2333;--border2:#263044;
-    --green:#00d97e;--green-lo:rgba(0,217,126,0.10);--green-md:rgba(0,217,126,0.22);
-    --text:#e8edf5;--muted:#7b8ea8;--faint:#313d52;
-    --mono:'JetBrains Mono',monospace;--ui:'Outfit',sans-serif;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:var(--ui);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,217,126,0.07) 1px,transparent 1px);background-size:36px 36px;pointer-events:none;z-index:0}
-  .glow-orb{position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:600px;height:420px;background:radial-gradient(ellipse,rgba(0,217,126,0.07) 0%,transparent 68%);pointer-events:none;z-index:0}
-  nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(8,11,16,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-  .logo{font-size:1.15rem;font-weight:800;letter-spacing:-0.02em;color:var(--text);text-decoration:none}
-  .logo b{color:var(--green)}
-  .nav-links{display:flex;align-items:center;gap:1.8rem}
-  .nav-links a{font-size:0.85rem;color:var(--muted);text-decoration:none;font-weight:500;transition:color .15s}
-  .nav-links a:hover{color:var(--text)}
-  .nav-right{display:flex;align-items:center;gap:0.8rem}
-  .nav-pill{font-family:var(--mono);font-size:0.65rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);border:1px solid var(--green-md);background:var(--green-lo);border-radius:100px;padding:0.22rem 0.75rem;display:flex;align-items:center;gap:0.45rem}
-  .pill-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:pulse 2.2s ease infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-  .nav-btn{background:var(--green);color:#050810;font-family:var(--ui);font-size:0.82rem;font-weight:700;padding:0.4rem 1rem;border-radius:6px;border:none;cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap}
-  .nav-btn:hover{background:#00c070}
-  .hero{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:8rem 2.5rem 6.5rem;text-align:center}
-  .hero-label{display:inline-flex;align-items:center;gap:0.6rem;font-family:var(--mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.8rem;animation:fadeUp 0.5s ease both}
-  .hero-label-line{width:20px;height:1px;background:var(--faint)}
-  h1{font-size:clamp(2.5rem,6vw,4.2rem);font-weight:800;line-height:1.08;letter-spacing:-0.03em;margin-bottom:1.4rem;animation:fadeUp 0.5s 0.08s ease both}
-  h1 span{color:var(--green)}
-  .sub{font-size:1.05rem;color:var(--muted);max-width:500px;margin:0 auto 0.6rem;line-height:1.75;animation:fadeUp 0.5s 0.16s ease both}
-  .hero-for{font-family:var(--mono);font-size:0.72rem;color:var(--faint);letter-spacing:0.04em;margin-bottom:2.2rem;animation:fadeUp 0.5s 0.2s ease both}
-  .cta-row{display:flex;align-items:center;justify-content:center;gap:0.9rem;flex-wrap:wrap;animation:fadeUp 0.5s 0.24s ease both}
-  .btn-dl{display:inline-flex;align-items:center;gap:0.55rem;background:var(--green);color:#050810;font-family:var(--ui);font-size:0.95rem;font-weight:700;padding:0.78rem 1.9rem;border-radius:8px;border:none;cursor:pointer;text-decoration:none;transition:all 0.15s}
-  .btn-dl:hover{background:#00c070;transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,217,126,0.22)}
-  .btn-dl svg{width:15px;height:15px;flex-shrink:0}
-  .btn-outline{display:inline-flex;align-items:center;gap:0.4rem;background:transparent;color:var(--muted);font-family:var(--ui);font-size:0.875rem;font-weight:500;padding:0.68rem 1.4rem;border-radius:8px;border:1px solid var(--border2);text-decoration:none;transition:all .15s}
-  .btn-outline:hover{border-color:var(--green-md);color:var(--text)}
-  .hero-disclaimer{margin-top:1.4rem;font-family:var(--mono);font-size:0.67rem;color:var(--faint);letter-spacing:0.05em;animation:fadeUp 0.5s 0.3s ease both}
-  .hero-meta{margin-top:1.6rem;font-family:var(--mono);font-size:0.65rem;color:var(--faint);letter-spacing:0.06em;animation:fadeUp 0.5s 0.36s ease both;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
-  .hero-meta span::before{content:'· '}
-  .hero-meta span:first-child::before{content:''}
-  .rule{border:none;border-top:1px solid var(--border)}
-  .section{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:5.5rem 2.5rem 6rem}
-  .sec-tag{font-family:var(--mono);font-size:0.65rem;color:var(--green);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.7rem;display:flex;align-items:center;gap:0.5rem}
-  .sec-tag::before{content:'//';opacity:0.5}
-  .sec-title{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:3rem}
-  .why-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-  @media(max-width:640px){.why-list{grid-template-columns:1fr}}
-  .why-item{background:var(--card);padding:1.8rem 2rem;display:flex;gap:1rem;align-items:flex-start;transition:background .2s;position:relative}
-  .why-item:hover{background:var(--surface)}
-  .why-item::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 10%,var(--green) 50%,transparent 90%);opacity:0;transition:opacity .25s}
-  .why-item:hover::after{opacity:1}
-  .why-icon{font-size:1.3rem;flex-shrink:0;margin-top:0.1rem}
-  .why-item strong{display:block;font-size:0.95rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.35rem;color:var(--text)}
-  .why-item p{font-size:0.84rem;color:var(--muted);line-height:1.7}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
-  @media(max-width:700px){.steps{grid-template-columns:1fr}}
-  .step{position:relative}
-  .step-num{font-family:var(--mono);font-size:0.62rem;font-weight:500;letter-spacing:0.12em;color:var(--green);margin-bottom:1rem}
-  .step-connector{display:none}
-  @media(min-width:701px){.step{padding:0 2rem}.step:first-child{padding-left:0}.step:last-child{padding-right:0}.step-connector{display:block;position:absolute;top:54px;right:-1px;width:2rem;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}}
-  @media(max-width:700px){.step{padding:0 0 2.5rem 3.5rem}.step:last-child{padding-bottom:0}.step-num{position:absolute;left:0;top:0}.step-connector{display:block;position:absolute;left:18px;top:58px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--border2),transparent)}}
-  .step-icon{width:46px;height:46px;background:var(--card);border:1px solid var(--border2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.1rem;position:relative;z-index:1;transition:border-color .2s,background .2s}
-  .step:hover .step-icon{border-color:var(--green-md);background:var(--surface)}
-  .step h3{font-size:0.95rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.55rem;line-height:1.35}
-  .step p{font-size:0.85rem;color:var(--muted);line-height:1.75}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-  @media(max-width:700px){.cards{grid-template-columns:1fr}}
-  .card{background:var(--card);padding:2.2rem 2rem;position:relative;transition:background .2s}
-  .card:hover{background:var(--surface)}
-  .card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 10%,var(--green) 50%,transparent 90%);opacity:0;transition:opacity .25s}
-  .card:hover::after{opacity:1}
-  .card-index{font-family:var(--mono);font-size:0.6rem;color:var(--faint);letter-spacing:0.1em;margin-bottom:1.1rem}
-  .card-icon{width:44px;height:44px;background:var(--surface);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;margin-bottom:1.1rem}
-  .card h3{font-size:1rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.55rem}
-  .card p{font-size:0.875rem;color:var(--muted);line-height:1.75}
-  .beta-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-  @media(max-width:640px){.beta-grid{grid-template-columns:1fr}}
-  .beta-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;display:flex;align-items:flex-start;gap:0.85rem;transition:border-color .2s}
-  .beta-item:hover{border-color:var(--border2)}
-  .beta-item-icon{font-size:1.15rem;flex-shrink:0;margin-top:0.05rem}
-  .beta-item strong{display:block;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.15rem}
-  .beta-item span{font-size:0.8rem;color:var(--muted);line-height:1.6}
-  .demo-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;overflow:hidden;max-width:780px;margin:0 auto}
-  .demo-header{background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-  .demo-header-title{font-family:var(--mono);font-size:0.72rem;color:var(--muted);letter-spacing:0.06em}
-  .demo-run-tag{font-family:var(--mono);font-size:0.62rem;color:var(--green);border:1px solid var(--green-md);background:var(--green-lo);border-radius:4px;padding:0.15rem 0.5rem;letter-spacing:0.06em}
-  .demo-body{padding:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-  @media(max-width:600px){.demo-body{grid-template-columns:1fr}}
-  .demo-panel-label{font-family:var(--mono);font-size:0.62rem;color:var(--faint);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem}
-  .score-row{display:flex;align-items:baseline;gap:0.5rem;margin-bottom:0.4rem}
-  .score-num{font-size:2.4rem;font-weight:800;line-height:1;color:var(--green)}
-  .score-denom{font-family:var(--mono);font-size:0.8rem;color:var(--faint)}
-  .score-label{font-size:0.8rem;color:var(--muted);margin-bottom:0.8rem}
-  .score-bar{height:4px;background:var(--bg);border-radius:4px}
-  .score-bar-fill{height:100%;border-radius:4px}
-  .readiness-val{font-size:1.5rem;font-weight:700;color:var(--green);margin-bottom:0.3rem}
-  .readiness-sub{font-size:0.8rem;color:var(--muted)}
-  .issue-list-demo{list-style:none;display:flex;flex-direction:column;gap:0.55rem}
-  .issue-row-demo{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.83rem}
-  .i-dot{width:7px;height:7px;border-radius:50%;margin-top:0.35rem;flex-shrink:0}
-  .dot-red{background:#ff4d6a}.dot-amber{background:#ffb347}.dot-blue{background:var(--green)}
-  .i-text strong{display:block;color:var(--text);font-weight:600;font-size:0.83rem}
-  .i-text span{color:var(--faint);font-size:0.74rem}
-  .action-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
-  .action-row-demo{display:flex;align-items:center;gap:0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:0.6rem 0.8rem}
-  .action-num{font-family:var(--mono);font-size:0.62rem;color:var(--green);background:var(--green-lo);border-radius:3px;padding:0.1rem 0.35rem;flex-shrink:0}
-  .action-text{font-size:0.82rem;color:var(--muted)}
-  .demo-footer-note{border-top:1px solid var(--border);padding:0.75rem 1.5rem;font-family:var(--mono);font-size:0.65rem;color:var(--faint);letter-spacing:0.04em}
-  .faq-list{display:flex;flex-direction:column}
-  .faq-item{border-bottom:1px solid var(--border)}
-  .faq-item:first-child{border-top:1px solid var(--border)}
-  .faq-q{padding:1.1rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;cursor:pointer;font-weight:600;font-size:0.92rem;list-style:none;user-select:none}
-  .faq-q:hover{color:var(--green)}
-  .faq-q::after{content:'+';font-family:var(--mono);font-size:1rem;color:var(--faint);flex-shrink:0}
-  details[open] .faq-q::after{content:'–'}
-  .faq-a{padding-bottom:1rem;font-size:0.875rem;color:var(--muted);line-height:1.75}
-  .final-cta{position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);text-align:center;padding:6rem 2.5rem}
-  .final-cta-tag{font-family:var(--mono);font-size:0.65rem;color:var(--green);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-  .final-cta-tag::before{content:'//';opacity:0.5}
-  .final-cta h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem}
-  .final-cta p{color:var(--muted);font-size:0.95rem;max-width:460px;margin:0 auto 2.2rem;line-height:1.7}
-  .final-cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
-  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-  .footer-logo{font-weight:700;font-size:0.9rem;color:var(--muted)}
-  .footer-logo b{color:var(--green)}
-  .footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
-  .footer-links a{font-family:var(--mono);font-size:0.68rem;color:var(--faint);text-decoration:none;letter-spacing:0.04em;transition:color .15s}
-  .footer-links a:hover{color:var(--muted)}
-  .footer-copy{font-family:var(--mono);font-size:0.65rem;color:var(--faint)}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-  @media(max-width:600px){nav{padding:0 1.25rem}.nav-links{display:none}.hero{padding:5.5rem 1.5rem 5rem}.section{padding:4rem 1.5rem 5rem}.final-cta{padding:4.5rem 1.5rem}footer{padding:1.5rem;flex-direction:column;align-items:flex-start}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCLabs — Free Windows PC Diagnostics</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KPVC24PLC5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KPVC24PLC5');
+  </script>
+  <meta name="description" content="PCLabs checks your CPU temps, RAM speed, disk health, GPU drivers, and Windows health — then tells you exactly what's wrong. Free, private, no install required." />
+  <link rel="icon" href="/images/pclabs-logo.png" type="image/png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PCLabs" />
+  <meta property="og:title" content="PCLabs — Free Windows PC Diagnostics" />
+  <meta property="og:description" content="PCLabs checks your CPU temps, RAM speed, disk health, GPU drivers, and Windows health — then tells you exactly what's wrong. Free, private, no install required." />
+  <meta property="og:url" content="https://www.thepclabs.com" />
+  <meta property="og:image" content="https://www.thepclabs.com/images/pclabs-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f;
+      --bg-card: #13131a;
+      --bg-hover: #1a1a24;
+      --accent: #4f8ef7;
+      --accent-dim: rgba(79, 142, 247, 0.15);
+      --accent-glow: rgba(79, 142, 247, 0.35);
+      --text: #e8e8f0;
+      --text-muted: #7a7a9a;
+      --border: rgba(255, 255, 255, 0.07);
+      --green: #34d399;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 13, 15, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.3px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg { display: block; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); background: var(--bg-hover); }
+    .nav-links a.active { color: var(--accent); background: var(--bg-hover); }
+
+    .nav-download {
+      background: var(--accent);
+      color: #fff !important;
+      font-weight: 600 !important;
+      border-radius: 8px;
+      padding: 7px 16px !important;
+      transition: opacity 0.15s !important;
+    }
+
+    .nav-download:hover { opacity: 0.88; background: var(--accent) !important; color: #fff !important; }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text-muted);
+    }
+
+    .nav-social-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+      padding: 0 4px;
+    }
+
+    .nav-links .nav-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .nav-links .nav-social-icon:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(79, 142, 247, 0.08);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 100px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(79, 142, 247, 0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(79, 142, 247, 0.3);
+      padding: 4px 14px;
+      border-radius: 99px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero-sub {
+      color: var(--text-muted);
+      font-size: 19px;
+      max-width: 540px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 24px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(79, 142, 247, 0.5);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 14px 24px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.15); background: var(--bg-hover); }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-meta-item svg { color: var(--green); flex-shrink: 0; }
+
+    /* ── HERO EKG ── */
+    .hero-ekg {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto 32px;
+      height: 48px;
+      overflow: hidden;
+      opacity: 0.6;
+    }
+
+    .hero-ekg svg {
+      width: 200%;
+      height: 48px;
+      display: block;
+      animation: ekg-scroll 1.8s linear infinite;
+      filter: drop-shadow(0 0 5px rgba(91, 170, 220, 0.65));
+      will-change: transform;
+    }
+
+    @keyframes ekg-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 16px 24px;
+      overflow: hidden;
+    }
+
+    .trust-bar-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .trust-item svg { color: var(--accent); flex-shrink: 0; }
+
+    /* ── SECTION SHARED ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.65;
+    }
+
+    /* ── FEATURES ── */
+    .features-header { margin-bottom: 48px; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .feature-card:hover { border-color: rgba(79, 142, 247, 0.25); }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(79, 142, 247, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .feature-name {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 48px;
+    }
+
+    .step {
+      padding: 32px 32px 32px 0;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+
+    .step:last-child { border-right: none; padding-right: 0; }
+    .step:not(:first-child) { padding-left: 32px; }
+
+    .step-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .step-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── WHAT IT CHECKS ── */
+    .checks-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 48px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+
+    .check-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .check-body strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .check-body span {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      text-align: center;
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(79, 142, 247, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner {
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      color: var(--text-muted);
+      font-size: 17px;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .cta-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .footer-logo-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-social {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .footer-social a:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(79, 142, 247, 0.08);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--border); padding: 24px 0 !important; }
+      .step:last-child { border-bottom: none; }
+      .checks-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; flex-direction: column; }
+      .nav-links.open {
+        display: flex;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 16px 16px;
+        gap: 2px;
+      }
+      .nav-links.open a { padding: 10px 14px; }
+      .nav-links.open .nav-social-icon { padding: 0; }
+      .nav-links.open .nav-social-item { padding: 6px 14px; }
+      .hamburger { display: flex; }
+      .hero { padding: 72px 20px 56px; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .hero-ctas a { text-align: center; justify-content: center; }
+      .trust-bar-inner { gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── BACKGROUND CANVAS ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(91, 170, 220, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91, 170, 220, 0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .bg-ekg-wrap {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 60px;
+      overflow: hidden;
+    }
+    .bg-ekg-svg {
+      width: 200%;
+      height: 60px;
+      display: block;
+      opacity: 0.13;
+      animation: bg-ekg-scroll 10s linear infinite;
+      will-change: transform;
+    }
+    @keyframes bg-ekg-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .bg-particles { position: absolute; inset: 0; }
+    .bg-particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #5BAADC;
+      box-shadow: 0 0 6px 2px rgba(91, 170, 220, 0.4);
+      opacity: 0;
+      animation: bg-particle-float 14s ease-in-out infinite;
+    }
+    .bg-particle:nth-child(1)  { left:  8%; top: 20%; animation-delay:    0s; animation-duration: 14s; }
+    .bg-particle:nth-child(2)  { left: 22%; top: 60%; animation-delay:   -4s; animation-duration: 11s; }
+    .bg-particle:nth-child(3)  { left: 40%; top: 35%; animation-delay:   -8s; animation-duration: 16s; }
+    .bg-particle:nth-child(4)  { left: 60%; top: 75%; animation-delay:   -2s; animation-duration: 12s; }
+    .bg-particle:nth-child(5)  { left: 75%; top: 18%; animation-delay:  -10s; animation-duration: 13s; }
+    .bg-particle:nth-child(6)  { left: 88%; top: 50%; animation-delay:   -6s; animation-duration: 15s; }
+    .bg-particle:nth-child(7)  { left: 14%; top: 82%; animation-delay:  -12s; animation-duration: 10s; }
+    .bg-particle:nth-child(8)  { left: 52%; top: 88%; animation-delay:   -3s; animation-duration: 17s; }
+    .bg-particle:nth-child(9)  { left: 33%; top: 10%; animation-delay:   -7s; animation-duration: 13s; }
+    .bg-particle:nth-child(10) { left: 68%; top: 92%; animation-delay:   -1s; animation-duration: 18s; }
+    @keyframes bg-particle-float {
+      0%   { opacity: 0;    transform: translateY(0)     scale(1);   }
+      15%  { opacity: 0.14; }
+      50%  { opacity: 0.18; transform: translateY(-50px) scale(1.3); }
+      85%  { opacity: 0.14; }
+      100% { opacity: 0;    transform: translateY(-100px) scale(0.7); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bg-ekg-svg, .bg-particle { animation: none; }
+    }
+  </style>
 </head>
 <body>
 
-<nav>
-  <a href="/" class="logo"><b>PC</b>Labs</a>
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#demo">Demo</a>
-    <a href="#faq">FAQ</a>
-    <a href="/app-preview.html">App Preview</a>
+<div id="bg-canvas" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-ekg-wrap">
+    <svg class="bg-ekg-svg" viewBox="0 0 2000 60" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 0,30 L 35,30 L 42,27 L 48,30 L 59,30 L 63,34 L 68,1 L 73,52 L 79,30 L 86,24 L 97,30 L 200,30 L 235,30 L 242,27 L 248,30 L 259,30 L 263,34 L 268,1 L 273,52 L 279,30 L 286,24 L 297,30 L 400,30 L 435,30 L 442,27 L 448,30 L 459,30 L 463,34 L 468,1 L 473,52 L 479,30 L 486,24 L 497,30 L 600,30 L 635,30 L 642,27 L 648,30 L 659,30 L 663,34 L 668,1 L 673,52 L 679,30 L 686,24 L 697,30 L 800,30 L 835,30 L 842,27 L 848,30 L 859,30 L 863,34 L 868,1 L 873,52 L 879,30 L 886,24 L 897,30 L 1000,30 L 1035,30 L 1042,27 L 1048,30 L 1059,30 L 1063,34 L 1068,1 L 1073,52 L 1079,30 L 1086,24 L 1097,30 L 1200,30 L 1235,30 L 1242,27 L 1248,30 L 1259,30 L 1263,34 L 1268,1 L 1273,52 L 1279,30 L 1286,24 L 1297,30 L 1400,30 L 1435,30 L 1442,27 L 1448,30 L 1459,30 L 1463,34 L 1468,1 L 1473,52 L 1479,30 L 1486,24 L 1497,30 L 1600,30 L 1635,30 L 1642,27 L 1648,30 L 1659,30 L 1663,34 L 1668,1 L 1673,52 L 1679,30 L 1686,24 L 1697,30 L 1800,30 L 1835,30 L 1842,27 L 1848,30 L 1859,30 L 1863,34 L 1868,1 L 1873,52 L 1879,30 L 1886,24 L 1897,30 L 2000,30"
+            stroke="#5BAADC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
-  <div class="nav-right">
-    <div class="nav-pill"><div class="pill-dot"></div>Public Beta</div>
-    <a href="/download.html" class="nav-btn">Download</a>
+  <div class="bg-particles">
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <img src="/images/pclabs-logo.png" alt="PCLabs" style="height:64px;width:auto;display:block;" />
+    </a>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="19" y2="6"/>
+        <line x1="3" y1="11" x2="19" y2="11"/>
+        <line x1="3" y1="16" x2="19" y2="16"/>
+      </svg>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/" class="active">Home</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+      <li class="nav-social-item">
+        <a href="https://www.tiktok.com/@pclabsapp" target="_blank" rel="noopener" aria-label="TikTok" class="nav-social-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.27 8.27 0 004.83 1.53V6.82a4.85 4.85 0 01-1.06-.13z"/>
+          </svg>
+        </a>
+        <a href="https://www.youtube.com/@pclabsapp" target="_blank" rel="noopener" aria-label="YouTube" class="nav-social-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+        <a href="https://discord.gg/PHFuDyF72P" target="_blank" rel="noopener" aria-label="Discord" class="nav-social-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.032.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+          </svg>
+        </a>
+      </li>
+      <li><a href="/download" class="nav-download">Download Free</a></li>
+    </ul>
   </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <div class="glow-orb"></div>
-  <div class="hero-label">
-    <div class="hero-label-line"></div>
-    PC Diagnostics & Gaming Optimization
-    <div class="hero-label-line"></div>
+  <div class="hero-eyebrow">Free Windows PC Diagnostics</div>
+  <h1>Your PC has problems.<br><span>PCLabs finds them.</span></h1>
+  <p class="hero-sub">Thermals, RAM speed, disk health, GPU drivers, Windows issues — checked in 30 seconds. Plain English results. Nothing installed. Nothing sent anywhere.</p>
+  <div class="hero-ekg" aria-hidden="true">
+    <svg viewBox="0 0 800 48" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 0,24 L 70,24 L 84,21 L 93,24 L 116,24 L 127,28 L 136,3 L 145,40 L 156,24 L 171,18 L 192,24 L 400,24 L 470,24 L 484,21 L 493,24 L 516,24 L 527,28 L 536,3 L 545,40 L 556,24 L 571,18 L 592,24 L 800,24"
+            stroke="#5BAADC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
-  <h1>Press one button.<br><span>Understand what's wrong.</span></h1>
-  <p class="sub">PCLabs runs a full health scan and gaming performance check in under 90 seconds — then tells you exactly what's wrong and what to do, in plain English.</p>
-  <p class="hero-for">Built for gamers and everyday PC users who want clear answers fast.</p>
-  <div class="cta-row">
-    <a href="/download.html" class="btn-dl">
-      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <div class="hero-ctas">
+    <a href="/download" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 2v9M4.5 7.5L8 11l3.5-3.5"/><path d="M2 13h12"/>
       </svg>
-      Download Beta
+      Download Free — Windows 10/11
     </a>
-    <a href="/app-preview.html" class="btn-outline">See App Preview →</a>
+    <a href="/pricing.html" class="btn-secondary">
+      See Pro features — $4.99
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7h8M7 3l4 4-4 4"/>
+      </svg>
+    </a>
   </div>
-  <p class="hero-disclaimer">Early beta. Read-only diagnostics. Feedback welcome.</p>
   <div class="hero-meta">
-    <span>Windows 10 / 11</span>
-    <span>Free to download</span>
-    <span>No account needed</span>
-    <span>No bloatware</span>
+    <div class="hero-meta-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      Read-only — nothing changed on your PC
+    </div>
+    <div class="hero-meta-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      No data sent anywhere
+    </div>
+    <div class="hero-meta-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      No account required
+    </div>
   </div>
 </section>
 
-<hr class="rule"/>
-
-<div class="section">
-  <div class="sec-tag">Sound familiar?</div>
-  <div class="sec-title">Why your PC feels slow or broken</div>
-  <ul class="why-list">
-    <li class="why-item"><span class="why-icon">🎮</span><div><strong>Low FPS or stuttering in games</strong><p>Your hardware may be capable, but misconfigured settings or a hidden bottleneck is killing performance.</p></div></li>
-    <li class="why-item"><span class="why-icon">💥</span><div><strong>Random crashes or freezes</strong><p>Could be a driver conflict, failing drive, or RAM issue — problems that are invisible until something breaks.</p></div></li>
-    <li class="why-item"><span class="why-icon">🌡️</span><div><strong>High temperatures or loud fans</strong><p>Thermal throttling silently slows your CPU and GPU down. You won't see it in Task Manager.</p></div></li>
-    <li class="why-item"><span class="why-icon">❓</span><div><strong>You don't know what's wrong</strong><p>Something feels off but you can't pinpoint it. PCLabs tells you exactly what it found and how confident it is.</p></div></li>
-  </ul>
-</div>
-
-<hr class="rule"/>
-
-<div class="section">
-  <div class="sec-tag">How it works</div>
-  <div class="sec-title">Three steps. No tech knowledge needed.</div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <div class="step-connector"></div>
-      <div class="step-icon">🖱️</div>
-      <h3>Run a one-click scan</h3>
-      <p>Launch PCLabs and hit the single scan button. It reads your hardware, thermals, drivers, installed games, and system logs — all in under 90 seconds.</p>
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      Free forever
     </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <div class="step-connector"></div>
-      <div class="step-icon">🔍</div>
-      <h3>See likely issues and performance bottlenecks</h3>
-      <p>Get a clear breakdown of what's wrong — CPU throttling, outdated drivers, RAM in the wrong slots — with a confidence level shown for every finding.</p>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      No bloatware
     </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <div class="step-connector" style="opacity:0"></div>
-      <div class="step-icon">✅</div>
-      <h3>Get plain-English fixes and game optimization recommendations</h3>
-      <p>Each issue comes with a specific action: what to do, how long it takes, and whether it's free.</p>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      No telemetry
+    </div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      Windows 10 &amp; 11
+    </div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      30–90 second scan
+    </div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 7 5.5 10.5 12 4"/></svg>
+      v0.2.0 — now available
     </div>
   </div>
 </div>
 
-<hr class="rule"/>
-
-<div class="section" id="features">
-  <div class="sec-tag">Features</div>
-  <div class="sec-title">Everything your PC has been hiding from you.</div>
-  <div class="cards">
-    <div class="card"><div class="card-index">01 / 03</div><div class="card-icon">🩺</div><h3>One-Click Diagnostics</h3><p>Scans for overheating, driver conflicts, RAM misconfiguration, and failing drives. Results with confidence levels in plain English.</p></div>
-    <div class="card"><div class="card-index">02 / 03</div><div class="card-icon">🎮</div><h3>Gaming Optimization</h3><p>Detects your installed games and recommends specific settings tuned to your hardware — not generic presets copied from a wiki.</p></div>
-    <div class="card"><div class="card-index">03 / 03</div><div class="card-icon">📊</div><h3>Benchmark & Bottleneck</h3><p>Estimates real FPS ranges per game and identifies whether your CPU, GPU, or RAM is the limiting factor holding you back.</p></div>
+<!-- FEATURES -->
+<section class="section">
+  <div class="features-header">
+    <div class="section-eyebrow">What it checks</div>
+    <h2 class="section-title">Six things your PC is hiding from you</h2>
+    <p class="section-sub">Most PC problems are silent — your machine just gets slower and hotter over time. PCLabs surfaces what Windows never tells you.</p>
   </div>
-</div>
 
-<hr class="rule"/>
+  <div class="features-grid">
 
-<div class="section" id="beta-included">
-  <div class="sec-tag">What's in beta</div>
-  <div class="sec-title">What's included in this release</div>
-  <div class="beta-grid">
-    <div class="beta-item"><span class="beta-item-icon">🩺</span><div><strong>Basic hardware scan</strong><span>Reads your CPU, GPU, RAM, and storage and checks against known performance baselines.</span></div></div>
-    <div class="beta-item"><span class="beta-item-icon">🔧</span><div><strong>Driver and performance checks</strong><span>Detects outdated drivers, thermal throttling, startup bloat, and common configuration issues.</span></div></div>
-    <div class="beta-item"><span class="beta-item-icon">🎮</span><div><strong>Early gaming optimization recommendations</strong><span>Per-game settings suggestions for supported titles, tuned to your hardware profile.</span></div></div>
-    <div class="beta-item"><span class="beta-item-icon">📋</span><div><strong>Plain-English results</strong><span>Every finding is explained without jargon. You'll know what it means and what to do.</span></div></div>
-  </div>
-</div>
-
-<hr class="rule"/>
-
-<div class="section" id="beta-limits">
-  <div class="sec-tag">Limitations</div>
-  <div class="sec-title" style="margin-bottom:0.75rem;">What this beta doesn't do yet</div>
-  <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2.5rem;max-width:520px;">PCLabs is an early beta. Here's what's still being built — we'll update this as things improve.</p>
-  <div class="beta-grid">
-    <div class="beta-item"><span class="beta-item-icon">🪟</span><div><strong>Windows only</strong><span>macOS and Linux are not supported. Windows 10 and 11 (64-bit) only for now.</span></div></div>
-    <div class="beta-item"><span class="beta-item-icon">👁️</span><div><strong>Read-only checks</strong><span>PCLabs does not make changes to your system. All results are informational only.</span></div></div>
-    <div class="beta-item"><span class="beta-item-icon">🎯</span><div><strong>Limited game support at launch</strong><span>Game optimization profiles are available for a growing list of titles. Not all games are covered yet.</span></div></div>
-    <div class="beta-item"><span class="beta-item-icon">🔄</span><div><strong>Recommendations are still improving</strong><span>Some suggestions may be general at first. We're refining accuracy with every release.</span></div></div>
-  </div>
-</div>
-
-<hr class="rule"/>
-
-<div class="section" id="demo">
-  <div class="sec-tag">Demo Result</div>
-  <div class="sec-title" style="margin-bottom:2rem;">What a scan looks like.</div>
-  <div class="demo-card">
-    <div class="demo-header">
-      <div class="demo-header-title">SAMPLE SCAN · Intel i5-12400F · RTX 3060 · 16GB RAM</div>
-      <div class="demo-run-tag">SCAN COMPLETE</div>
-    </div>
-    <div class="demo-body">
-      <div>
-        <div class="demo-panel-label">PC Health Score</div>
-        <div class="score-row"><div class="score-num">78</div><div class="score-denom">/ 100</div></div>
-        <div class="score-label">A few issues detected — see below</div>
-        <div class="score-bar"><div class="score-bar-fill" style="width:78%;background:var(--green)"></div></div>
-        <div style="margin-top:1.5rem;">
-          <div class="demo-panel-label">Gaming Readiness</div>
-          <div class="readiness-val">Good</div>
-          <div class="readiness-sub">Hardware capable for most titles at 1080p</div>
-        </div>
+    <!-- 1. System Profile -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="12" rx="1.5"/>
+          <path d="M6 18h8M10 15v3"/>
+          <path d="M6 8h2M6 11h5"/>
+        </svg>
       </div>
-      <div>
-        <div class="demo-panel-label">Detected Issues</div>
-        <ul class="issue-list-demo">
-          <li class="issue-row-demo"><div class="i-dot dot-red"></div><div class="i-text"><strong>GPU driver outdated</strong><span>Driver v531.18 — 8 months old</span></div></li>
-          <li class="issue-row-demo"><div class="i-dot dot-amber"></div><div class="i-text"><strong>CPU temps high</strong><span>Peaking at 91°C — throttle risk</span></div></li>
-          <li class="issue-row-demo"><div class="i-dot dot-blue"></div><div class="i-text"><strong>Too many startup apps</strong><span>14 apps launching at boot</span></div></li>
-        </ul>
-        <div style="margin-top:1.2rem;">
-          <div class="demo-panel-label">Suggested Actions</div>
-          <ul class="action-list">
-            <li class="action-row-demo"><span class="action-num">01</span><span class="action-text">Update NVIDIA driver to v560.81</span></li>
-            <li class="action-row-demo"><span class="action-num">02</span><span class="action-text">Clean CPU cooler / reapply thermal paste</span></li>
-            <li class="action-row-demo"><span class="action-num">03</span><span class="action-text">Disable startup apps via Task Manager</span></li>
-          </ul>
-        </div>
+      <div class="feature-name">System Profile</div>
+      <div class="feature-desc">Captures your full hardware snapshot — CPU, GPU, RAM (total and speed), storage capacity and free space, motherboard, BIOS version and age, display resolution, and refresh rate. Everything in one place, no Device Manager digging.</div>
+    </div>
+
+    <!-- 2. Storage Health -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="10" cy="7" rx="8" ry="3.5"/>
+          <path d="M2 7v6c0 1.93 3.58 3.5 8 3.5s8-1.57 8-3.5V7"/>
+          <circle cx="14" cy="7" r="0.75" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div class="feature-name">Storage Health</div>
+      <div class="feature-desc">Checks every physical drive via Windows' built-in health APIs — drive type (SSD or HDD), health status, and operational state. Flags any drive that isn't reporting clean so you can back up before data loss happens.</div>
+    </div>
+
+    <!-- 3. Stability & Crashes -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 2L2.5 17h15L10 2z"/>
+          <path d="M10 8v4"/>
+          <circle cx="10" cy="14.5" r="0.75" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div class="feature-name">Stability &amp; Crashes</div>
+      <div class="feature-desc">Parses your Windows Event Log for the last 30 days — BSODs with stop codes, unexpected shutdowns, hardware errors, application crashes, and service failures. Shows the actual apps crashing and how often, ranked by frequency.</div>
+    </div>
+
+    <!-- 4. Performance -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 17a7 7 0 0 1 14 0"/>
+          <path d="M10 10l-3 4"/>
+          <circle cx="10" cy="10" r="1.25" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div class="feature-name">Performance</div>
+      <div class="feature-desc">Measures live CPU and RAM usage, disk queue length, startup program count and impact, background process memory consumption, thermal throttling events, and whether your power plan is silently capping your CPU speed.</div>
+    </div>
+
+    <!-- 5. Windows Health & Security -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 2L3 5.5v4.75C3 14.1 6.1 17.8 10 18.9c3.9-1.1 7-4.8 7-8.65V5.5L10 2z"/>
+          <polyline points="7 10 9 12 13 8"/>
+        </svg>
+      </div>
+      <div class="feature-name">Windows Health &amp; Security</div>
+      <div class="feature-desc">Checks pending Windows Updates, Defender antivirus status, real-time protection, Windows activation, Secure Boot, TPM state, BitLocker encryption, pending restarts, and any devices reporting errors in Device Manager.</div>
+    </div>
+
+    <!-- 6. Network & Gaming -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 9.5C5.5 6 14.5 6 18 9.5"/>
+          <path d="M4.5 12C7 9.75 13 9.75 15.5 12"/>
+          <path d="M7.5 14.5C9 13.25 11 13.25 12.5 14.5"/>
+          <circle cx="10" cy="17" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div class="feature-name">Network &amp; Gaming</div>
+      <div class="feature-desc">Detects your connection type (Ethernet vs Wi-Fi), tests internet connectivity, measures ping latency and packet loss to 8.8.8.8, flags active VPN adapters, and produces an overall gaming readiness score based on your hardware and network.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-section">
+  <div class="section">
+    <div class="section-eyebrow">How it works</div>
+    <h2 class="section-title">Download. Install. Done.</h2>
+    <p class="section-sub">No account. No background processes. PCLabs installs in seconds, tells you what it found, and gets out of your way.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">Step 01</div>
+        <div class="step-title">Download the installer</div>
+        <div class="step-desc">Download the PCLabs Setup file. If Windows SmartScreen appears, click "More info" then "Run anyway" — this is normal for newly released apps. Windows 10 and 11, 64-bit supported.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 02</div>
+        <div class="step-title">Run a diagnostic scan</div>
+        <div class="step-desc">Click "Run Diagnostic Scan." PCLabs queries your hardware using Windows APIs — thermals, RAM, storage, drivers, and more. Takes 30–90 seconds. Nothing is changed on your PC.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 03</div>
+        <div class="step-title">Read your results</div>
+        <div class="step-desc">Every finding is explained in plain English with a health score, severity level, and a recommended action. No decoding required — just read and act.</div>
       </div>
     </div>
-    <div class="demo-footer-note">This is mock data. Actual results are based on your hardware and system state.</div>
   </div>
 </div>
 
-<hr class="rule"/>
+<!-- WHAT IT ACTUALLY CHECKS -->
+<section class="section">
+  <div class="section-eyebrow">Under the hood</div>
+  <h2 class="section-title">What PCLabs actually looks at</h2>
+  <p class="section-sub">Twelve specific checks across your entire system — the ones that actually matter for performance and stability.</p>
 
-<div class="section" id="faq">
-  <div class="sec-tag">FAQ</div>
-  <div class="sec-title" style="margin-bottom:2rem;">Common questions.</div>
-  <div class="faq-list">
-    <details class="faq-item"><summary class="faq-q">Is PCLabs free?</summary><p class="faq-a">Yes — the beta is completely free to download and use. No account required. A Pro tier may follow after launch, but the core scan will always be free.</p></details>
-    <details class="faq-item"><summary class="faq-q">Does it fix my PC automatically?</summary><p class="faq-a">No. PCLabs diagnoses and recommends — it does not make changes on your behalf. Every suggestion comes with an explanation and you decide what to act on. No registry tweaks, no silent changes.</p></details>
-    <details class="faq-item"><summary class="faq-q">Does it work for gaming?</summary><p class="faq-a">Yes. PCLabs detects your installed games and provides specific settings recommendations tuned to your hardware. It also estimates FPS ranges and identifies if your CPU, GPU, or RAM is the bottleneck.</p></details>
-    <details class="faq-item"><summary class="faq-q">Do I need technical experience?</summary><p class="faq-a">None at all. Every result is explained in plain English. If the scan finds a problem, it tells you what it means and what to do — without assuming you know what a PCIe lane or thermal throttle is.</p></details>
-    <details class="faq-item"><summary class="faq-q">What does it support?</summary><p class="faq-a">PCLabs supports Windows 10 and Windows 11 (64-bit). Game optimization profiles are available for a growing list of titles. New profiles are added with each update.</p></details>
+  <div class="checks-grid">
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>CPU temperature &amp; throttling</strong>
+        <span>Is your processor hitting thermal limits under load? Is performance being reduced to protect it?</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>GPU temperature &amp; driver version</strong>
+        <span>Running hot? Driver too old? Both cause crashes, black screens, and stuttering.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>RAM speed vs. rated speed</strong>
+        <span>Is XMP/EXPO enabled? Your RAM might be running at half its rated speed right now.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>Disk S.M.A.R.T. status</strong>
+        <span>Early failure warnings that your PC never surfaces — until the drive dies and you lose everything.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>Windows Update status</strong>
+        <span>Missing critical security and stability patches can cause crashes and leave you exposed.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>Power plan configuration</strong>
+        <span>Windows "Balanced" mode quietly caps your CPU. PCLabs tells you if it's limiting performance.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>Crash &amp; stability history</strong>
+        <span>Scans Windows event logs for recent BSODs, application crashes, and unexpected restarts.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>Startup impact</strong>
+        <span>Which programs are slowing your boot time — and how badly? Ranked by actual measured impact.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>Network adapter health</strong>
+        <span>Driver age, connection stability, and adapter configuration issues that affect online performance.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>BIOS &amp; motherboard info</strong>
+        <span>BIOS version and release date — so you know if a firmware update is long overdue.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>System hardware profile</strong>
+        <span>Full CPU, GPU, RAM, and storage snapshot — everything in one place, no digging through Device Manager.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot"></div>
+      <div class="check-body">
+        <strong>Gaming readiness score</strong>
+        <span>A combined verdict on whether your system is holding back your games — and what to fix first.</span>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<hr class="rule"/>
-
-<div class="final-cta">
-  <div class="glow-orb"></div>
-  <div class="final-cta-tag">Public Beta</div>
-  <h2>Try PCLabs now.</h2>
-  <p>Download the beta, test it on your PC, and send feedback as we improve the scan engine.</p>
-  <div class="final-cta-btns">
-    <a href="/download.html" class="btn-dl">
-      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Check your PC in 30 seconds.</h2>
+    <p>Free, private, and nothing is changed on your machine. Find out what Windows isn't telling you.</p>
+    <a href="/download" class="btn-primary" style="display:inline-flex;margin:0 auto;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 2v9M4.5 7.5L8 11l3.5-3.5"/><path d="M2 13h12"/>
       </svg>
-      Download Beta
+      Download PCLabs — Free
     </a>
-    <a href="/feedback.html" class="btn-outline">Report Feedback →</a>
+    <p class="cta-note">Windows 10 &amp; 11 &nbsp;·&nbsp; No account &nbsp;·&nbsp; No install &nbsp;·&nbsp; <a href="/pricing.html" style="color:var(--accent);text-decoration:none;">Pro from $4.99 →</a></p>
   </div>
-</div>
+</section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><b>PC</b>Labs</div>
-  <div class="footer-links">
-    <a href="/download.html">Download</a>
-    <a href="/app-preview.html">App Preview</a>
-    <a href="/feedback.html">Feedback</a>
-    <a href="mailto:hello@thepclabs.com">Contact</a>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">
+      <img src="/images/pclabs-logo.png" alt="PCLabs" style="height:64px;width:auto;display:block;" />
+    </a>
+    <ul class="footer-links">
+      <li><a href="/download">Download</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+    </ul>
+    <span class="footer-copy">&copy; 2026 PCLabs. Built for Windows users who want real answers.</span>
+    <div class="footer-social">
+      <a href="https://www.tiktok.com/@pclabsapp" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.27 8.27 0 004.83 1.53V6.82a4.85 4.85 0 01-1.06-.13z"/>
+        </svg>
+      </a>
+      <a href="https://www.youtube.com/@pclabsapp" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      </a>
+      <a href="https://discord.gg/PHFuDyF72P" target="_blank" rel="noopener" aria-label="Discord">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.032.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+        </svg>
+      </a>
+    </div>
   </div>
-  <div class="footer-copy">No bloatware &nbsp;·&nbsp; No fake fixes &nbsp;·&nbsp; © 2026 PCLabs</div>
 </footer>
+
+<script>
+  var hamburger = document.getElementById('hamburger');
+  var navLinks  = document.getElementById('nav-links');
+  hamburger.addEventListener('click', function() { navLinks.classList.toggle('open'); });
+  navLinks.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() { navLinks.classList.remove('open'); });
+  });
+</script>
 
 </body>
 </html>
