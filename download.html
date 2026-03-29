@@ -244,6 +244,63 @@
 
     .btn-download svg { flex-shrink: 0; }
 
+    /* ── SMARTSCREEN NOTICE ── */
+    .smartscreen-notice {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      max-width: 480px;
+      margin: 20px auto 0;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .smartscreen-icon {
+      font-size: 18px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+      opacity: 0.7;
+    }
+
+    .smartscreen-body strong {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+      letter-spacing: 0.01em;
+    }
+
+    .smartscreen-body p,
+    .smartscreen-body ol {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 5px;
+    }
+
+    .smartscreen-body ol {
+      padding-left: 16px;
+      margin-bottom: 6px;
+    }
+
+    .smartscreen-body ol li { margin-bottom: 2px; }
+
+    .smartscreen-body strong em {
+      font-style: normal;
+      color: var(--text);
+    }
+
+    .smartscreen-sub {
+      font-size: 0.7rem !important;
+      color: rgba(122, 122, 154, 0.7) !important;
+      margin-bottom: 0 !important;
+    }
+
     .hero-meta {
       margin-top: 16px;
       font-size: 13px;
@@ -695,6 +752,21 @@
   <p class="hero-meta">
     v0.2.0 &nbsp;<span>·</span>&nbsp; Windows 10 / 11 &nbsp;<span>·</span>&nbsp; 64-bit
   </p>
+
+  <div class="smartscreen-notice">
+    <div class="smartscreen-icon">🛡️</div>
+    <div class="smartscreen-body">
+      <strong>Windows Security Notice</strong>
+      <p>Windows may show a SmartScreen warning when installing.
+      This is normal for new apps. To install:</p>
+      <ol>
+        <li>Click <strong>"More info"</strong> on the warning</li>
+        <li>Click <strong>"Run anyway"</strong></li>
+      </ol>
+      <p class="smartscreen-sub">PCLabs is read-only and never
+      modifies your system files or collects personal data.</p>
+    </div>
+  </div>
 
   <div class="trust-strip">
     <div class="trust-item">
